@@ -69,10 +69,6 @@ The framework supports evaluating several realistic interventions:
 
 ### 1. Install Dependencies
 
-```bash
-pip install -r requirements.txt
-```
-
 You’ll also need:
 - [Ultralytics YOLOv8](https://docs.ultralytics.com/)
 - [DTALite](https://github.com/asu-trans-ai-lab/DTALite)
