@@ -70,7 +70,7 @@ The framework supports evaluating several realistic interventions:
 ### 1. Install Dependencies
 
 You’ll also need:
-- [Ultralytics YOLOv8](https://docs.ultralytics.com/)
+- [Ultralytics YOLO](https://docs.ultralytics.com/)
 - [DTALite](https://github.com/asu-trans-ai-lab/DTALite)
 - EPA [MOVES-Matrix](https://tse.ce.gatech.edu/development-of-moves-matrix/)
 
@@ -136,5 +136,4 @@ python 4.1_scenario_results.py
 
 ## 📜 License
 
-This project is licensed under the MIT License.  
-See [`LICENSE`](LICENSE) for details.
+This project is licensed under the MIT License.
