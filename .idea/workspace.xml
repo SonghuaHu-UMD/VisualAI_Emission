@@ -1,0 +1,1053 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e94f5c0b-e1d5-40ac-b8f3-6178a8a93971" name="Changes" comment="NC_Final" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;SonghuaHu-UMD&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SonghuaHu-UMD/VisualAI_Emission.git&quot;,
+    &quot;accountId&quot;: &quot;f3ea52f3-8bf2-4026-b56e-3d78e688d4c3&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/anaconda3/envs/geo_env/Lib/site-packages/seaborn/categorical.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/anaconda3/envs/geo_env/Lib/site-packages/seaborn/regression.py" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2T2pAoMexRbo2NYSsBpgKiRc3k4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.0.1.1_gptlabeling.executor&quot;: &quot;Run&quot;,
+    &quot;Python.0.1_gptlabeling.executor&quot;: &quot;Run&quot;,
+    &quot;Python.0.2_camera2traffic (1).executor&quot;: &quot;Debug&quot;,
+    &quot;Python.0.2_vehicle_classification.executor&quot;: &quot;Run&quot;,
+    &quot;Python.0_static_camera_traffic_flow_new.executor&quot;: &quot;Run&quot;,
+    &quot;Python.1.0_camera2traffic (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.1.0_camera2traffic.executor&quot;: &quot;Run&quot;,
+    &quot;Python.1.0_camera2traffic_crop.executor&quot;: &quot;Run&quot;,
+    &quot;Python.1.0_camera2traffic_plot.executor&quot;: &quot;Run&quot;,
+    &quot;Python.2.1_dtalite_run.executor&quot;: &quot;Run&quot;,
+    &quot;Python.2.1_dtalite_run_osm.executor&quot;: &quot;Run&quot;,
+    &quot;Python.2.2_dtalite_plot_osm.executor&quot;: &quot;Run&quot;,
+    &quot;Python.3.0_moves_prepare_link.executor&quot;: &quot;Run&quot;,
+    &quot;Python.3.1_moves_matrix (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.3.1_moves_matrix.executor&quot;: &quot;Run&quot;,
+    &quot;Python.3_moves_matrix.executor&quot;: &quot;Run&quot;,
+    &quot;Python.4.0_scenario_moves_prepare_link (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.4.0_scenario_moves_prepare_link.executor&quot;: &quot;Run&quot;,
+    &quot;Python.5.2_vehicle_classification.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Process_Camera_Video.executor&quot;: &quot;Run&quot;,
+    &quot;Python.emission_street.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.static_camera_video (1).executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;ignore_missing_gitignore&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/huson/PycharmProjects/VisualAI_Emission&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\Dubai" />
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\2-dta" />
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\4-scenario" />
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\temp" />
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\temp" />
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\4-scenario" />
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\3-moves" />
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\dta" />
+      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\visual" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.Process_Camera_Video">
+    <configuration name="2.1_dtalite_run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TrafficVedio" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NY/2-dta" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NY/2-dta/2.1_dtalite_run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="3.0_moves_prepare_link" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TrafficVedio" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NY/3-moves" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NY/3-moves/3.0_moves_prepare_link.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="3.1_moves_matrix (1)" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+      <module name="TrafficVedio" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NY/3-moves" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NY/3-moves/3.1_moves_matrix.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="4.0_scenario_moves_prepare_link (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TrafficVedio" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NY/4-scenario" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NY/4-scenario/4.0_scenario_moves_prepare_link.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Process_Camera_Video" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TrafficVedio" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Dubai" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Dubai/Process_Camera_Video.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Process_Camera_Video" />
+        <item itemvalue="Python.2.1_dtalite_run" />
+        <item itemvalue="Python.3.1_moves_matrix (1)" />
+        <item itemvalue="Python.4.0_scenario_moves_prepare_link (1)" />
+        <item itemvalue="Python.3.0_moves_prepare_link" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.54" />
+        <option value="bundled-python-sdk-02a7a6f367a7-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.54" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e94f5c0b-e1d5-40ac-b8f3-6178a8a93971" name="Changes" comment="" />
+      <created>1690250889129</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1690250889129</updated>
+      <workItem from="1690250890285" duration="14362000" />
+      <workItem from="1690319197797" duration="929000" />
+      <workItem from="1690343526512" duration="68000" />
+      <workItem from="1690385563299" duration="1309000" />
+      <workItem from="1692155517092" duration="45000" />
+      <workItem from="1692155571875" duration="7000" />
+      <workItem from="1692585925791" duration="6834000" />
+      <workItem from="1692630273658" duration="4150000" />
+      <workItem from="1692681555682" duration="20000" />
+      <workItem from="1692753909490" duration="2284000" />
+      <workItem from="1692756962473" duration="9812000" />
+      <workItem from="1692800041972" duration="11798000" />
+      <workItem from="1692889986285" duration="3754000" />
+      <workItem from="1693358143383" duration="3357000" />
+      <workItem from="1693784522762" duration="10920000" />
+      <workItem from="1693865458464" duration="5661000" />
+      <workItem from="1693877376994" duration="46000" />
+      <workItem from="1693877475662" duration="582000" />
+      <workItem from="1693878223953" duration="7311000" />
+      <workItem from="1693923163417" duration="513000" />
+      <workItem from="1693955023053" duration="6967000" />
+      <workItem from="1694098559145" duration="601000" />
+      <workItem from="1694223285922" duration="8864000" />
+      <workItem from="1694234195392" duration="3325000" />
+      <workItem from="1694270422087" duration="9308000" />
+      <workItem from="1694627785953" duration="21577000" />
+      <workItem from="1694703664747" duration="2419000" />
+      <workItem from="1695145219572" duration="909000" />
+      <workItem from="1695160202561" duration="26000" />
+      <workItem from="1695221537984" duration="2856000" />
+      <workItem from="1695329572340" duration="5953000" />
+      <workItem from="1695340493311" duration="16844000" />
+      <workItem from="1695390912697" duration="1274000" />
+      <workItem from="1695415658125" duration="26639000" />
+      <workItem from="1695447027846" duration="3894000" />
+      <workItem from="1695486159408" duration="8769000" />
+      <workItem from="1695564330011" duration="2377000" />
+      <workItem from="1695590660493" duration="216000" />
+      <workItem from="1695746676797" duration="2576000" />
+      <workItem from="1695839360045" duration="3000" />
+      <workItem from="1696303517372" duration="4854000" />
+      <workItem from="1696350132685" duration="11701000" />
+      <workItem from="1696362443261" duration="675000" />
+      <workItem from="1696367572166" duration="802000" />
+      <workItem from="1696375382344" duration="2183000" />
+      <workItem from="1696379222553" duration="696000" />
+      <workItem from="1696381669239" duration="36000" />
+      <workItem from="1697650890420" duration="5091000" />
+      <workItem from="1697921751945" duration="631000" />
+      <workItem from="1698259037406" duration="6190000" />
+      <workItem from="1698347503676" duration="1199000" />
+      <workItem from="1698409487035" duration="1463000" />
+      <workItem from="1698635132556" duration="1486000" />
+      <workItem from="1698987843521" duration="342000" />
+      <workItem from="1699038657047" duration="608000" />
+      <workItem from="1700063077667" duration="128000" />
+      <workItem from="1700063275880" duration="27000" />
+      <workItem from="1700325650892" duration="612000" />
+      <workItem from="1700344459640" duration="1168000" />
+      <workItem from="1700346126707" duration="3561000" />
+      <workItem from="1700360416368" duration="876000" />
+      <workItem from="1700372393445" duration="3981000" />
+      <workItem from="1700526547351" duration="8894000" />
+      <workItem from="1700626045141" duration="1361000" />
+      <workItem from="1700684334784" duration="1670000" />
+      <workItem from="1700772930445" duration="370000" />
+      <workItem from="1700773434003" duration="42000" />
+      <workItem from="1701102848109" duration="1181000" />
+      <workItem from="1701104607781" duration="12293000" />
+      <workItem from="1701271148860" duration="851000" />
+      <workItem from="1701636585581" duration="671000" />
+      <workItem from="1701753222737" duration="484000" />
+      <workItem from="1701794486286" duration="604000" />
+      <workItem from="1703055163722" duration="632000" />
+      <workItem from="1703206985682" duration="5915000" />
+      <workItem from="1703311141169" duration="68000" />
+      <workItem from="1703474851621" duration="4650000" />
+      <workItem from="1703781667475" duration="33158000" />
+      <workItem from="1704216851799" duration="16592000" />
+      <workItem from="1705190508175" duration="18000" />
+      <workItem from="1705190534949" duration="286000" />
+      <workItem from="1705435605817" duration="25262000" />
+      <workItem from="1705506725369" duration="2931000" />
+      <workItem from="1705519206558" duration="24720000" />
+      <workItem from="1705718090810" duration="711000" />
+      <workItem from="1706545014723" duration="43000" />
+      <workItem from="1706545109935" duration="32812000" />
+      <workItem from="1706586362634" duration="2718000" />
+      <workItem from="1706623270888" duration="8100000" />
+      <workItem from="1706656577342" duration="970000" />
+      <workItem from="1706657606490" duration="1376000" />
+      <workItem from="1706713109596" duration="615000" />
+      <workItem from="1708905883031" duration="9829000" />
+      <workItem from="1708962954727" duration="12685000" />
+      <workItem from="1708979973528" duration="15139000" />
+      <workItem from="1709049534597" duration="434000" />
+      <workItem from="1709338737036" duration="774000" />
+      <workItem from="1709588255350" duration="13518000" />
+      <workItem from="1709649267560" duration="2786000" />
+      <workItem from="1709654883634" duration="20798000" />
+      <workItem from="1709737231112" duration="8658000" />
+      <workItem from="1709938486059" duration="10582000" />
+      <workItem from="1710117267813" duration="7143000" />
+      <workItem from="1710286340768" duration="4688000" />
+      <workItem from="1710340592376" duration="2396000" />
+      <workItem from="1710431465987" duration="3292000" />
+      <workItem from="1710695703524" duration="930000" />
+      <workItem from="1710894875294" duration="2169000" />
+      <workItem from="1711673028813" duration="899000" />
+      <workItem from="1711679846969" duration="24000" />
+      <workItem from="1712371733614" duration="3989000" />
+      <workItem from="1712519209674" duration="605000" />
+      <workItem from="1712521129608" duration="604000" />
+      <workItem from="1713101450680" duration="33000" />
+      <workItem from="1713101492237" duration="16656000" />
+      <workItem from="1713206655014" duration="13222000" />
+      <workItem from="1713230744793" duration="40788000" />
+      <workItem from="1713327089112" duration="1206000" />
+      <workItem from="1713361377828" duration="20972000" />
+      <workItem from="1713451190994" duration="16716000" />
+      <workItem from="1713482348921" duration="15073000" />
+      <workItem from="1713621423560" duration="17293000" />
+      <workItem from="1713648427326" duration="847000" />
+      <workItem from="1713654618291" duration="6276000" />
+      <workItem from="1713709669488" duration="1404000" />
+      <workItem from="1713713929702" duration="2102000" />
+      <workItem from="1713716262586" duration="2209000" />
+      <workItem from="1713817916088" duration="4587000" />
+      <workItem from="1713846048219" duration="3224000" />
+      <workItem from="1713849429881" duration="18293000" />
+      <workItem from="1713908799135" duration="14481000" />
+      <workItem from="1713929059457" duration="4398000" />
+      <workItem from="1713967834833" duration="29107000" />
+      <workItem from="1714059199051" duration="10279000" />
+      <workItem from="1714235375124" duration="21045000" />
+      <workItem from="1714603383068" duration="68000" />
+      <workItem from="1714603465365" duration="481000" />
+      <workItem from="1714603957559" duration="15000" />
+      <workItem from="1714703468394" duration="726000" />
+      <workItem from="1714756004197" duration="349000" />
+      <workItem from="1714756363353" duration="19323000" />
+      <workItem from="1714834267438" duration="620000" />
+      <workItem from="1714835269687" duration="10363000" />
+      <workItem from="1714845884812" duration="30569000" />
+      <workItem from="1714918057760" duration="9934000" />
+      <workItem from="1714929133426" duration="420000" />
+      <workItem from="1714929561108" duration="5287000" />
+      <workItem from="1714946463182" duration="32997000" />
+      <workItem from="1715034703718" duration="5939000" />
+      <workItem from="1715040888719" duration="88255000" />
+      <workItem from="1715265064006" duration="55410000" />
+      <workItem from="1715479373510" duration="77903000" />
+      <workItem from="1715661613641" duration="21179000" />
+      <workItem from="1715784254614" duration="29777000" />
+      <workItem from="1715873852661" duration="3278000" />
+      <workItem from="1715915883184" duration="2181000" />
+      <workItem from="1715950396128" duration="6491000" />
+      <workItem from="1715986626324" duration="947000" />
+      <workItem from="1716002481832" duration="8318000" />
+      <workItem from="1716072288923" duration="722000" />
+      <workItem from="1716137069868" duration="51449000" />
+      <workItem from="1716652046654" duration="72298000" />
+      <workItem from="1716901243536" duration="2812000" />
+      <workItem from="1716951936409" duration="890000" />
+      <workItem from="1716958069515" duration="6004000" />
+      <workItem from="1716985488830" duration="17678000" />
+      <workItem from="1717017868691" duration="639000" />
+      <workItem from="1717018810654" duration="192000" />
+      <workItem from="1717107642595" duration="1000" />
+      <workItem from="1717108198035" duration="16831000" />
+      <workItem from="1717162079810" duration="39355000" />
+      <workItem from="1717363341608" duration="613000" />
+      <workItem from="1717379500890" duration="3205000" />
+      <workItem from="1717440721985" duration="12779000" />
+      <workItem from="1717515246612" duration="2843000" />
+      <workItem from="1717528004625" duration="19832000" />
+      <workItem from="1717680838238" duration="2734000" />
+      <workItem from="1717710931856" duration="2688000" />
+      <workItem from="1717850656755" duration="4012000" />
+      <workItem from="1717870181892" duration="35360000" />
+      <workItem from="1718027095250" duration="12769000" />
+      <workItem from="1718066204247" duration="41508000" />
+      <workItem from="1718501217051" duration="647000" />
+      <workItem from="1718553324341" duration="52000" />
+      <workItem from="1718668319314" duration="13000" />
+      <workItem from="1719148715031" duration="1879000" />
+      <workItem from="1719247355882" duration="1199000" />
+      <workItem from="1719353744069" duration="812000" />
+      <workItem from="1719405196555" duration="34000" />
+      <workItem from="1719509465987" duration="599000" />
+      <workItem from="1719670869364" duration="1330000" />
+      <workItem from="1719778791942" duration="268000" />
+      <workItem from="1720015187454" duration="168000" />
+      <workItem from="1720211448236" duration="2148000" />
+      <workItem from="1720673931989" duration="615000" />
+      <workItem from="1721327988913" duration="335000" />
+      <workItem from="1721328368924" duration="2637000" />
+      <workItem from="1721443136167" duration="1546000" />
+      <workItem from="1721482257126" duration="4790000" />
+      <workItem from="1721689195386" duration="1476000" />
+      <workItem from="1721747119826" duration="627000" />
+      <workItem from="1721829675414" duration="609000" />
+      <workItem from="1721932606046" duration="6000" />
+      <workItem from="1722048557778" duration="4000" />
+      <workItem from="1722261836614" duration="3252000" />
+      <workItem from="1723234399440" duration="36144000" />
+      <workItem from="1723326223816" duration="28736000" />
+      <workItem from="1723687126939" duration="89000" />
+      <workItem from="1723688047531" duration="7114000" />
+      <workItem from="1723749686556" duration="2580000" />
+      <workItem from="1723763418054" duration="4181000" />
+      <workItem from="1723774561203" duration="40000" />
+      <workItem from="1723774653552" duration="1732000" />
+      <workItem from="1723817132884" duration="82000" />
+      <workItem from="1723817441624" duration="817000" />
+      <workItem from="1723848412702" duration="10770000" />
+      <workItem from="1723902398185" duration="618000" />
+      <workItem from="1723920967042" duration="2533000" />
+      <workItem from="1724007996795" duration="1415000" />
+      <workItem from="1724516970228" duration="5279000" />
+      <workItem from="1724589077556" duration="33370000" />
+      <workItem from="1724681986842" duration="28085000" />
+      <workItem from="1724769187017" duration="96339000" />
+      <workItem from="1725394785344" duration="248000" />
+      <workItem from="1725411267304" duration="39000" />
+      <workItem from="1725413195222" duration="616000" />
+      <workItem from="1725724792475" duration="2314000" />
+      <workItem from="1725934826087" duration="1387000" />
+      <workItem from="1726028002741" duration="7000" />
+      <workItem from="1726162671410" duration="634000" />
+      <workItem from="1727233981404" duration="4152000" />
+      <workItem from="1727282473563" duration="136000" />
+      <workItem from="1729094220619" duration="5000" />
+      <workItem from="1729288166062" duration="645000" />
+      <workItem from="1729466548662" duration="2262000" />
+      <workItem from="1729527551567" duration="76000" />
+      <workItem from="1729550721839" duration="2555000" />
+      <workItem from="1729649416017" duration="271000" />
+      <workItem from="1730227380054" duration="9562000" />
+      <workItem from="1730302359405" duration="9048000" />
+      <workItem from="1730406499019" duration="1473000" />
+      <workItem from="1730477432877" duration="28860000" />
+      <workItem from="1730557379595" duration="33793000" />
+      <workItem from="1730679925511" duration="733000" />
+      <workItem from="1730764319536" duration="16760000" />
+      <workItem from="1730826798467" duration="179000" />
+      <workItem from="1730857499038" duration="6672000" />
+      <workItem from="1730990951179" duration="21000" />
+      <workItem from="1731348679176" duration="3882000" />
+      <workItem from="1731633251783" duration="16000" />
+      <workItem from="1731904687062" duration="189000" />
+      <workItem from="1732301559961" duration="609000" />
+      <workItem from="1732327115004" duration="1786000" />
+      <workItem from="1732750986073" duration="524000" />
+      <workItem from="1732751625923" duration="273000" />
+      <workItem from="1734798138516" duration="58540000" />
+      <workItem from="1734918160843" duration="40928000" />
+      <workItem from="1735580164498" duration="2911000" />
+      <workItem from="1737389284121" duration="18000" />
+      <workItem from="1737682112076" duration="10451000" />
+      <workItem from="1737734311665" duration="22305000" />
+      <workItem from="1737816556296" duration="5389000" />
+      <workItem from="1738025610444" duration="1529000" />
+      <workItem from="1738121662176" duration="120000" />
+      <workItem from="1738121856591" duration="183000" />
+      <workItem from="1738165476042" duration="475000" />
+      <workItem from="1738166046927" duration="1284000" />
+      <workItem from="1738254433045" duration="2089000" />
+      <workItem from="1738345799330" duration="1198000" />
+      <workItem from="1738595909870" duration="2714000" />
+      <workItem from="1739144903511" duration="1107000" />
+      <workItem from="1739146028753" duration="2363000" />
+      <workItem from="1739226615972" duration="255000" />
+      <workItem from="1739290197703" duration="38000" />
+      <workItem from="1741903317686" duration="2349000" />
+      <workItem from="1742075834145" duration="117000" />
+      <workItem from="1742091610663" duration="1222000" />
+      <workItem from="1742095365040" duration="1256000" />
+      <workItem from="1742404383917" duration="677000" />
+      <workItem from="1742569590649" duration="2272000" />
+      <workItem from="1742756733427" duration="2651000" />
+      <workItem from="1743199129072" duration="1856000" />
+      <workItem from="1743296354809" duration="337000" />
+      <workItem from="1744076666854" duration="1407000" />
+      <workItem from="1744909719083" duration="11213000" />
+      <workItem from="1745184891635" duration="2799000" />
+      <workItem from="1745464960649" duration="689000" />
+      <workItem from="1745542909101" duration="596000" />
+      <workItem from="1745601007964" duration="2135000" />
+      <workItem from="1745973265605" duration="449000" />
+      <workItem from="1747495086258" duration="1427000" />
+      <workItem from="1747527731014" duration="2514000" />
+      <workItem from="1747838260741" duration="7970000" />
+      <workItem from="1747875971873" duration="4617000" />
+      <workItem from="1747924723995" duration="71347000" />
+      <workItem from="1748183504087" duration="14829000" />
+      <workItem from="1748301950570" duration="823000" />
+      <workItem from="1748309520928" duration="1240000" />
+      <workItem from="1748367882431" duration="2633000" />
+      <workItem from="1748485498158" duration="362000" />
+      <workItem from="1748526777884" duration="32000" />
+      <workItem from="1748527682508" duration="91000" />
+      <workItem from="1748528975667" duration="1590000" />
+      <workItem from="1748917707965" duration="640000" />
+      <workItem from="1749163128577" duration="441000" />
+      <workItem from="1749164329634" duration="601000" />
+      <workItem from="1749172159686" duration="6060000" />
+      <workItem from="1750457811608" duration="7896000" />
+      <workItem from="1750511808737" duration="31468000" />
+      <workItem from="1750598808693" duration="622000" />
+      <workItem from="1750616736363" duration="15000" />
+      <workItem from="1750625261254" duration="3511000" />
+      <workItem from="1750645704065" duration="631000" />
+      <workItem from="1750718382842" duration="5000" />
+      <workItem from="1751294107140" duration="3637000" />
+      <workItem from="1751328009859" duration="3130000" />
+      <workItem from="1751331155323" duration="1249000" />
+      <workItem from="1751332416552" duration="10000" />
+    </task>
+    <task id="LOCAL-00010" summary="GIMINI">
+      <option name="closed" value="true" />
+      <created>1700773147263</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1700773147263</updated>
+    </task>
+    <task id="LOCAL-00011" summary="GIMINI">
+      <option name="closed" value="true" />
+      <created>1703781697870</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1703781697871</updated>
+    </task>
+    <task id="LOCAL-00012" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1704148398293</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1704148398293</updated>
+    </task>
+    <task id="LOCAL-00013" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1704176605591</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1704176605592</updated>
+    </task>
+    <task id="LOCAL-00014" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1704177240221</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1704177240221</updated>
+    </task>
+    <task id="LOCAL-00015" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1704261410539</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1704261410539</updated>
+    </task>
+    <task id="LOCAL-00016" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1705613219559</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1705613219559</updated>
+    </task>
+    <task id="LOCAL-00017" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1708916002142</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1708916002142</updated>
+    </task>
+    <task id="LOCAL-00018" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1709010260163</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1709010260163</updated>
+    </task>
+    <task id="LOCAL-00019" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1709049964076</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1709049964076</updated>
+    </task>
+    <task id="LOCAL-00020" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1709951189978</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1709951189978</updated>
+    </task>
+    <task id="LOCAL-00021" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1710130607559</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1710130607559</updated>
+    </task>
+    <task id="LOCAL-00022" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1713221286489</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1713221286489</updated>
+    </task>
+    <task id="LOCAL-00023" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1713394961239</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1713394961239</updated>
+    </task>
+    <task id="LOCAL-00024" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1713451279666</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1713451279666</updated>
+    </task>
+    <task id="LOCAL-00025" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1713453276557</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1713453276557</updated>
+    </task>
+    <task id="LOCAL-00026" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1713486580463</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1713486580463</updated>
+    </task>
+    <task id="LOCAL-00027" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1713639273218</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1713639273219</updated>
+    </task>
+    <task id="LOCAL-00028" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1713853161770</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1713853161770</updated>
+    </task>
+    <task id="LOCAL-00029" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1713883055420</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1713883055420</updated>
+    </task>
+    <task id="LOCAL-00030" summary="NY_New">
+      <option name="closed" value="true" />
+      <created>1714104120462</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1714104120462</updated>
+    </task>
+    <task id="LOCAL-00031" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1714860823465</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1714860823465</updated>
+    </task>
+    <task id="LOCAL-00032" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1714881392436</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1714881392436</updated>
+    </task>
+    <task id="LOCAL-00033" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1714928894397</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1714928894397</updated>
+    </task>
+    <task id="LOCAL-00034" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1714948072253</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1714948072253</updated>
+    </task>
+    <task id="LOCAL-00035" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1714970154917</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1714970154917</updated>
+    </task>
+    <task id="LOCAL-00036" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1715042931425</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1715042931425</updated>
+    </task>
+    <task id="LOCAL-00037" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1715094450740</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1715094450741</updated>
+    </task>
+    <task id="LOCAL-00038" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1715137523022</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1715137523022</updated>
+    </task>
+    <task id="LOCAL-00039" summary="CarType">
+      <option name="closed" value="true" />
+      <created>1715352004624</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1715352004624</updated>
+    </task>
+    <task id="LOCAL-00040" summary="YearlyPattern">
+      <option name="closed" value="true" />
+      <created>1715611843561</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1715611843561</updated>
+    </task>
+    <task id="LOCAL-00041" summary="YearlyPattern">
+      <option name="closed" value="true" />
+      <created>1715793114505</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1715793114505</updated>
+    </task>
+    <task id="LOCAL-00042" summary="YearlyPattern">
+      <option name="closed" value="true" />
+      <created>1717014168366</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1717014168366</updated>
+    </task>
+    <task id="LOCAL-00043" summary="YearlyPattern">
+      <option name="closed" value="true" />
+      <created>1717164165092</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1717164165092</updated>
+    </task>
+    <task id="LOCAL-00044" summary="MOVES_Multi">
+      <option name="closed" value="true" />
+      <created>1717945149973</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1717945149973</updated>
+    </task>
+    <task id="LOCAL-00045" summary="MOVES_Multi">
+      <option name="closed" value="true" />
+      <created>1718065920477</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1718065920477</updated>
+    </task>
+    <task id="LOCAL-00046" summary="MOVES_Multi">
+      <option name="closed" value="true" />
+      <created>1719779054407</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1719779054407</updated>
+    </task>
+    <task id="LOCAL-00047" summary="MOVES_Multi">
+      <option name="closed" value="true" />
+      <created>1722264561219</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1722264561219</updated>
+    </task>
+    <task id="LOCAL-00048" summary="NS_Paper">
+      <option name="closed" value="true" />
+      <created>1723298360632</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1723298360632</updated>
+    </task>
+    <task id="LOCAL-00049" summary="NS_Paper">
+      <option name="closed" value="true" />
+      <created>1730498053919</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1730498053919</updated>
+    </task>
+    <task id="LOCAL-00050" summary="NS_Paper">
+      <option name="closed" value="true" />
+      <created>1730521079780</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1730521079781</updated>
+    </task>
+    <task id="LOCAL-00051" summary="NS_Paper">
+      <option name="closed" value="true" />
+      <created>1730600960299</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1730600960299</updated>
+    </task>
+    <task id="LOCAL-00052" summary="NS_Paper">
+      <option name="closed" value="true" />
+      <created>1731368057246</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1731368057246</updated>
+    </task>
+    <task id="LOCAL-00053" summary="NS_Paper">
+      <option name="closed" value="true" />
+      <created>1734842989553</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1734842989553</updated>
+    </task>
+    <task id="LOCAL-00054" summary="NS_Paper">
+      <option name="closed" value="true" />
+      <created>1737692909310</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1737692909310</updated>
+    </task>
+    <task id="LOCAL-00055" summary="NS_Paper">
+      <option name="closed" value="true" />
+      <created>1738121672243</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1738121672244</updated>
+    </task>
+    <task id="LOCAL-00056" summary="GEMINI_Final">
+      <option name="closed" value="true" />
+      <created>1739148809523</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1739148809523</updated>
+    </task>
+    <task id="LOCAL-00057" summary="NC_Final">
+      <option name="closed" value="true" />
+      <created>1747936153865</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1747936153866</updated>
+    </task>
+    <task id="LOCAL-00058" summary="NC_Final">
+      <option name="closed" value="true" />
+      <created>1751332293486</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1751332293486</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Video EDA" />
+    <MESSAGE value="Add: AADT" />
+    <MESSAGE value="GIMINI" />
+    <MESSAGE value="NY_New" />
+    <MESSAGE value="CarType" />
+    <MESSAGE value="YearlyPattern" />
+    <MESSAGE value="MOVES_Multi" />
+    <MESSAGE value="NS_Paper" />
+    <MESSAGE value="GEMINI_Final" />
+    <MESSAGE value="NC_Final" />
+    <option name="LAST_COMMIT_MESSAGE" value="NC_Final" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/temp/static_camera_traffic_flow_video.py</url>
+          <line>178</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/temp/0_static_camera_traffic_flow_new_detector.py</url>
+          <line>360</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/GIMINI/Process_Camera_Video.py</url>
+          <line>172</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/TrafficVedio$OD_Input.coverage" NAME="OD_Input Coverage Results" MODIFIED="1700360570987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$0_1_1_gptlabeling.coverage" NAME="0.1.1_gptlabeling Coverage Results" MODIFIED="1743200102613" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY/temp" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$1_0_camera2traffic_plot.coverage" NAME="1.0_camera2traffic_plot Coverage Results" MODIFIED="1724698485693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$3_1_moves_matrix__1_.coverage" NAME="3.1_moves_matrix (1) Coverage Results" MODIFIED="1748058879390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY/3-moves" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$5_2_vehicle_classification.coverage" NAME="5.2_vehicle_classification Coverage Results" MODIFIED="1715494335868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$4_0_scenario_moves_prepare_link__1_.coverage" NAME="4.0_scenario_moves_prepare_link (1) Coverage Results" MODIFIED="1748038695009" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY/4-scenario" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$0_2_vehicle_classification.coverage" NAME="0.2_vehicle_classification Coverage Results" MODIFIED="1724612984294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$3_moves_matrix.coverage" NAME="3_moves_matrix Coverage Results" MODIFIED="1709692709148" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$0_static_camera_traffic_flow_new.coverage" NAME="0_static_camera_traffic_flow_new Coverage Results" MODIFIED="1705449543548" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$websocket_crawl.coverage" NAME="websocket_crawl Coverage Results" MODIFIED="1693956355514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$2_2_dtalite_plot_osm.coverage" NAME="2.2_dtalite_plot_osm Coverage Results" MODIFIED="1717164299470" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$emission_street.coverage" NAME="emission_street Coverage Results" MODIFIED="1717454529053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GIMINI" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$0_1_gptlabeling.coverage" NAME="0.1_gptlabeling Coverage Results" MODIFIED="1716852937116" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$static_camera_traffic_flow_one.coverage" NAME="static_camera_traffic_flow_one Coverage Results" MODIFIED="1695340252343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GIMINI" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$static_camera_traffic_flow_video.coverage" NAME="static_camera_traffic_flow_video Coverage Results" MODIFIED="1695349665410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$3_0_moves_prepare_link.coverage" NAME="3.0_moves_prepare_link Coverage Results" MODIFIED="1747938733240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY/3-moves" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$1_0_camera2traffic_crop.coverage" NAME="1.0_camera2traffic_crop Coverage Results" MODIFIED="1716938562708" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$2_1_dtalite_run_osm.coverage" NAME="2.1_dtalite_run_osm Coverage Results" MODIFIED="1717165485440" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$2_1_dtalite_run.coverage" NAME="2.1_dtalite_run Coverage Results" MODIFIED="1750526930747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY/2-dta" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$1_0_camera2traffic.coverage" NAME="1.0_camera2traffic Coverage Results" MODIFIED="1744914818225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$static_camera_video__1_.coverage" NAME="static_camera_video (1) Coverage Results" MODIFIED="1705593973901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GIMINI" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$mydlink_data.coverage" NAME="mydlink_data Coverage Results" MODIFIED="1694271070997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GIMINI" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$1_Manual_Prepare.coverage" NAME="1_Manual_Prepare Coverage Results" MODIFIED="1694223926763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$1_0_camera2traffic__1_.coverage" NAME="1.0_camera2traffic (1) Coverage Results" MODIFIED="1717681957847" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$3_1_moves_matrix.coverage" NAME="3.1_moves_matrix Coverage Results" MODIFIED="1735057844147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$4_0_scenario_moves_prepare_link.coverage" NAME="4.0_scenario_moves_prepare_link Coverage Results" MODIFIED="1734918607792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$0_2_camera2traffic__1_.coverage" NAME="0.2_camera2traffic (1) Coverage Results" MODIFIED="1713324000823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NY" />
+    <SUITE FILE_PATH="coverage/TrafficVedio$Process_Camera_Video.coverage" NAME="Process_Camera_Video Coverage Results" MODIFIED="1751297536663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dubai" />
+  </component>
+</project>
