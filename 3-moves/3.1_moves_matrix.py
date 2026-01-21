@@ -13,7 +13,8 @@ from pathlib import Path
 start_time = time.time()
 
 ## this path may need to be changed to locate matrix database directory
-matrixdatapath = r"D:\NY_Emission\MOVES\MatrixData"
+# /data/input_s_cong_8
+matrixdatapath = r"/data/MOVES"
 # hf: month from 8 to 1
 # ess = ['s_raw', 's_peak10', 's_remote10', 's_mode10']  # 'cd', 'te', 'hf', 'ss', '', 'ns', 'nsp', 'nvo'
 # ess = ['s_peak20', 's_remote20', 's_mode20']
@@ -24,11 +25,11 @@ ess=['s_cong_8']
 # <codecell>
 def main():
     calctime = 0
-    print("Let's hang out with MOVES-Matrix! " + "Updated on November 30, 2018.")
+    print("Let's hang out with MOVES-Matrix! " + "Updated on November 30, 2024.")
     print()
     for kk in ess:
         print(kk)
-        path = r"D:\NY_Emission\MOVES\input_%s" % kk
+        path = r"/data/input_%s" % kk
         os.chdir(path)
         with open('batchmode.csv', 'rt') as f:
             readbatch = csv.reader(f, delimiter=',')
@@ -54,7 +55,7 @@ def main():
                     avgspeedemissioncalc(path)
                 emissioncalc()
                 tt2 = time.time()
-                print("Exporting result for task" + batchrow[0] + "...")
+                print("Exporting result for task" + batchrow[0] + "..." + path)
                 resultoutput(batchrow[0], path)
                 calctime += round((tt2 - tt1), 2)
         print("")
@@ -154,7 +155,6 @@ def importopmode(opmodedistribution, path):
     global opmodedistributiondf
     opmodedistributiondf = pd.read_csv(opmodedistribution + ".csv", header=0)
 
-
 #    opmodedistributiondf.to_csv("opInput_task.csv")
 
 
@@ -177,7 +177,7 @@ def calcopmode(driveschedulesecondlink, path, taskid):
     sourcetypeparam.append([1.63041, 0, 0.00418844, 24.601, 17.1])
     os.chdir(path)
 
-    drivecycle = pd.read_csv(driveschedulesecondlink + ".csv")
+    drivecycle = pd.read_csv(driveschedulesecondlink + ".csv").head(10000)
     drivecycle['acc'] = drivecycle.groupby('linkID')['speed'].diff().fillna(0)
     sch_linkid = drivecycle['linkID'].tolist()
     # sch_id = drivecycle['secondID'].tolist()
@@ -190,7 +190,7 @@ def calcopmode(driveschedulesecondlink, path, taskid):
     gc.collect()
     global opmodedistributiondf
     opmodedistributiondf = pd.DataFrame()
-    for jj1 in tqdm(range(0, 13)):
+    for jj1 in [12]: # tqdm(range(0, 13))
         temp_opmode = {}
         temp_vsp = [0 for x in range(len(sch_speed))]
         for jj2 in range(0, len(sch_speed)):
@@ -325,15 +325,17 @@ def emissioncalc():
 
 # <codecell>
 def resultoutput(idid, path):
-    checkpoint_dir = Path(path + '\Output')
+    checkpoint_dir = Path(path + '/Output')
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
-    os.chdir(path + '\Output')
+    os.chdir(path + '/Output')
     emissioninventory1 = emissioninventory[['linkID', 'pollutantID', 'emrate', 'emquant']]
     eminvbylinksource1 = eminvbylinksource[['linkID', 'sourceTypeID', 'pollutantID', 'emrate', 'emquant']]
+    print(emissioninventory1)
     emissioninventory1.to_csv('task' + str(idid) + '_emissionbylink.csv', sep=',', index=False)
     eminvbylinksource1.to_csv('task' + str(idid) + '_emissionbylinksource.csv', sep=',', index=False)
 
 
 # <codecell>
+
 
 main()

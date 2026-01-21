@@ -97,15 +97,9 @@ camera_count = files.groupby('ID')['Timestamp'].count().sort_values().reset_inde
 print('No of camera: %s, Mean interval: %s' % (len(camera_count), files['Diff'].mean()))
 
 # # Whether time increases over time
-# files['Date']=files['Datetime'].dt.date
-# files['Hour']=files['Datetime'].dt.hour
-# files.groupby(['Date','Hour'])['Diff'].mean()
-# files['Datetime'].max()
 camera_count['Timestamp'].plot(marker='o', markersize=2, color='k')
 
 # Build vedio and select
-# i_f = r'/home/hu/NY_Image//'
-# files = pd.DataFrame(glob.glob(r'%s*' % i_f))
 files = pd.read_csv('files.csv')
 all_ids = list(set(files['ID']))
 error_list = []

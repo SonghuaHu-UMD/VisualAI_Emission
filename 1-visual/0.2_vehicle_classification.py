@@ -45,8 +45,7 @@ def transform_single(img, input_size, crop_pct=1, mean=timm.data.constants.IMAGE
     return data_transforms(img)
 
 # Split the folder for model training
-splitfolders.ratio(r'D:\NY_Emission\Cartype\Crop_NY_Final', output=r"D:\NY_Emission\Cartype\Bing_label\Final_TVT",
-                   seed=1337, ratio=(.8, 0.2, 0))
+splitfolders.ratio(r'D:\NY_Emission\Cartype\Crop_NY_Final', output=r"D:\NY_Emission\Cartype\Bing_label\Final_TVT",  seed=1337, ratio=(.8, 0.2, 0))
 
 if __name__ == '__main__':
     # Load data
@@ -95,10 +94,6 @@ if __name__ == '__main__':
         suggested_lrs = learn.lr_find()
         lr = suggested_lrs.valley * 4
         start = datetime.datetime.now()
-        # learn.fit(10, cbs=[fva.MixedPrecision(), fva.SaveModelCallback(),
-        #                    fva.EarlyStoppingCallback(min_delta=1e-3, patience=10)])
-        # learn.fit_one_cycle(100, lr, cbs=[fva.MixedPrecision(), fva.SaveModelCallback(),
-        #                                  fva.EarlyStoppingCallback(min_delta=1e-3, patience=10)])
         learn.fine_tune(epochs=15, base_lr=lr, cbs=[fva.MixedPrecision(), fva.SaveModelCallback(),
                                                     fva.EarlyStoppingCallback(min_delta=1e-3, patience=5)])
         end = datetime.datetime.now() - start
@@ -108,9 +103,6 @@ if __name__ == '__main__':
 
         # torch.save(learn.model.state_dict(), str(checkpoint_dir.absolute()) + "\\%s.pth" % model_name)
         learn.export(str(checkpoint_dir.absolute()) + "\\%s.pkl" % model_name, pickle_module=dill)
-        # learn.export(r'D:\NY_Emission\Video_Process\data_models' + "\\%s.pkl" % model_name)
-        # shutil.copy2(r'D:\NY_Emission\Cartype\model\%s\model.pth' % timestamp,
-        #              r'D:\NY_Emission\Video_Process\data_models' + "\\%s.pth" % model_name)
 
         # Get the train and val loss
         # learn.recorder.plot_loss()
