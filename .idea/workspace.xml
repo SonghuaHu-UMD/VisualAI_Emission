@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e94f5c0b-e1d5-40ac-b8f3-6178a8a93971" name="Changes" comment="NC_Final">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-visual/0.2_vehicle_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/0.2_vehicle_classification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-visual/1.2_camera_signal_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.2_camera_signal_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-visual/1.3_camera_vehicle_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.3_camera_vehicle_analysis.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,12 +41,12 @@
     &quot;assignee&quot;: &quot;SonghuaHu-UMD&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/SonghuaHu-UMD/VisualAI_Emission.git&quot;,
-    &quot;accountId&quot;: &quot;f3ea52f3-8bf2-4026-b56e-3d78e688d4c3&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/SonghuaHu-UMD/VisualAI_Emission.git",
+    "accountId": "8ce2b5fc-ef50-40e6-8852-5a4dc77d67fa"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/anaconda3/envs/geo_env/Lib/site-packages/seaborn/categorical.py" root0="SKIP_INSPECTION" />
     <setting file="file://$USER_HOME$/anaconda3/envs/geo_env/Lib/site-packages/seaborn/regression.py" root0="SKIP_INSPECTION" />
@@ -63,56 +62,56 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.0.1.1_gptlabeling.executor&quot;: &quot;Run&quot;,
-    &quot;Python.0.1_gptlabeling.executor&quot;: &quot;Run&quot;,
-    &quot;Python.0.2_camera2traffic (1).executor&quot;: &quot;Debug&quot;,
-    &quot;Python.0.2_vehicle_classification.executor&quot;: &quot;Run&quot;,
-    &quot;Python.0_static_camera_traffic_flow_new.executor&quot;: &quot;Run&quot;,
-    &quot;Python.1.0_camera2traffic (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.1.0_camera2traffic.executor&quot;: &quot;Run&quot;,
-    &quot;Python.1.0_camera2traffic_crop.executor&quot;: &quot;Run&quot;,
-    &quot;Python.1.0_camera2traffic_plot.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.1_dtalite_run.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.1_dtalite_run_osm.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.2_dtalite_plot_osm.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.0_moves_prepare_link.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.1_moves_matrix (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.1_moves_matrix.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3_moves_matrix.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.0_scenario_moves_prepare_link (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.0_scenario_moves_prepare_link.executor&quot;: &quot;Run&quot;,
-    &quot;Python.5.2_vehicle_classification.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Process_Camera_Video.executor&quot;: &quot;Run&quot;,
-    &quot;Python.emission_street.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.static_camera_video (1).executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;ignore_missing_gitignore&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/huson/PycharmProjects/VisualAI_Emission&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.0.1.1_gptlabeling.executor": "Run",
+    "Python.0.1_gptlabeling.executor": "Run",
+    "Python.0.2_camera2traffic (1).executor": "Debug",
+    "Python.0.2_vehicle_classification.executor": "Run",
+    "Python.0_static_camera_traffic_flow_new.executor": "Run",
+    "Python.1.0_camera2traffic (1).executor": "Run",
+    "Python.1.0_camera2traffic.executor": "Run",
+    "Python.1.0_camera2traffic_crop.executor": "Run",
+    "Python.1.0_camera2traffic_plot.executor": "Run",
+    "Python.2.1_dtalite_run.executor": "Run",
+    "Python.2.1_dtalite_run_osm.executor": "Run",
+    "Python.2.2_dtalite_plot_osm.executor": "Run",
+    "Python.3.0_moves_prepare_link.executor": "Run",
+    "Python.3.1_moves_matrix (1).executor": "Run",
+    "Python.3.1_moves_matrix.executor": "Run",
+    "Python.3_moves_matrix.executor": "Run",
+    "Python.4.0_scenario_moves_prepare_link (1).executor": "Run",
+    "Python.4.0_scenario_moves_prepare_link.executor": "Run",
+    "Python.5.2_vehicle_classification.executor": "Run",
+    "Python.Process_Camera_Video.executor": "Run",
+    "Python.emission_street.executor": "Debug",
+    "Python.static_camera_video (1).executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "ignore_missing_gitignore": "true",
+    "last_opened_file_path": "C:/Users/Administrator/PycharmProjects/VisualAI_Emission/4-scenario",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\Dubai" />
-      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\2-dta" />
-      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\4-scenario" />
-      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY\temp" />
-      <recent name="C:\Users\huson\PycharmProjects\TrafficVedio\NY" />
+      <recent name="C:\Users\Administrator\PycharmProjects\VisualAI_Emission\4-scenario" />
+      <recent name="C:\Users\Administrator\PycharmProjects\VisualAI_Emission\3-moves" />
+      <recent name="C:\Users\Administrator\PycharmProjects\VisualAI_Emission\2-dta" />
+      <recent name="C:\Users\Administrator\PycharmProjects\VisualAI_Emission\1-visual" />
+      <recent name="C:\Users\Administrator\PycharmProjects\VisualAI_Emission" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\huson\PycharmProjects\VisualAI_Emission" />
@@ -256,8 +255,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.54" />
-        <option value="bundled-python-sdk-02a7a6f367a7-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.54" />
+        <option value="bundled-python-sdk-ca5e2b39c7df-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.308" />
       </set>
     </attachedChunks>
   </component>
@@ -587,14 +585,7 @@
       <workItem from="1751328009859" duration="3130000" />
       <workItem from="1751331155323" duration="1249000" />
       <workItem from="1751332416552" duration="1694000" />
-    </task>
-    <task id="LOCAL-00013" summary="NY_New">
-      <option name="closed" value="true" />
-      <created>1704176605591</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1704176605592</updated>
+      <workItem from="1769037893340" duration="912000" />
     </task>
     <task id="LOCAL-00014" summary="NY_New">
       <option name="closed" value="true" />
@@ -980,7 +971,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751333452854</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="NC_Final">
+      <option name="closed" value="true" />
+      <created>1769038037542</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1769038037542</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

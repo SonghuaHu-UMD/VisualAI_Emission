@@ -96,8 +96,8 @@ plt.xlabel('Number of Parameters (Millions)')
 plt.tight_layout()
 plt.savefig(r'D:\NY_Emission\Figure\parasize_loss.pdf')
 
-# Final model: NC
-model_nm = 'efficientnetv2_rw_t'
+# Final model
+model_nm = 'convnext_tiny'
 # Plot confusion_matrix
 confusion_matrix = pd.read_pickle(r'D:\NY_Emission\Cartype\f_model\20240508210959-%s\confusion_matrix.pkl' % model_nm)
 confusion_matrix = confusion_matrix.astype(int)

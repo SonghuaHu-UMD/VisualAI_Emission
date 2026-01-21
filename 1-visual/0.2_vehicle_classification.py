@@ -58,13 +58,6 @@ if __name__ == '__main__':
 
     # Select a model from timm: https://paperswithcode.com/lib/timm
     # model_list = pd.DataFrame(timm.list_models('vit*', pretrained=True))
-    # 'efficientnetv2_rw_t',
-    # 'resnet18', 'resnet50', 'efficientnet_b3', 'efficientnetv2_rw_t', 'efficientnetv2_rw_s',
-    # 'convnext_tiny', "convnext_small", 'inception_v3', 'inception_v4', "inception_next_tiny",
-    # 'densenet121', 'densenet201', 'xception41', 'xception71', 'repvgg_a2',
-    # 'vit_base_patch16_224', 'vit_small_patch16_224',
-    # "vit_tiny_patch16_224", 'swin_tiny_patch4_window7_224', "swin_base_patch4_window7_224",
-    # "tf_mobilenetv3_large_minimal_100", "tf_mobilenetv3_small_minimal_100"
     for model_name in ['vit_small_patch16_224', 'swin_base_patch4_window7_224', 'convnext_tiny', 'repvgg_a2',
                        'inception_v4', 'resnet50', 'densenet201', 'inception_next_tiny', 'xception71',
                        'efficientnetv2_rw_t']:

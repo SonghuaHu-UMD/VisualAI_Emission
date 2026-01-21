@@ -206,7 +206,7 @@ plt.tight_layout()
 plt.savefig(r'D:\NY_Emission\Figure\green_light.pdf')
 
 
-# Transfer signal into driving cycle
+# Demo: Transfer signal into driving cycle
 raw_sd = pd.read_csv(r'D:\NY_Emission\Speed\NY_TT1\NY_TT1.csv')
 raw_sd['measurement_tstamp'] = pd.to_datetime(raw_sd['measurement_tstamp'])
 raw_sd1 = raw_sd[(raw_sd['tmc_code'] == '120+05434') & (raw_sd['measurement_tstamp'].dt.hour == 18) & (
