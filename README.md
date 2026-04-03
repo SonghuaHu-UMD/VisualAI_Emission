@@ -58,7 +58,7 @@ For more detailed explanation, please refer to [pipeline_documentation.md](pipel
 
 | File | Description |
 |------|-------------|
-| `config.py` | Centralized configuration: data paths, CRS constants, MOVES source type mappings, BPR parameters (alpha=0.15, beta=4 per HCM), pollutant ID-to-name mapping, free-flow speeds by road type, unit conversion factors, and plot style settings. |
+| `config.py` | Centralized configuration: data paths, CRS constants, MOVES source type mappings, BPR parameters, pollutant ID-to-name mapping, free-flow speeds by road type, unit conversion factors, and plot style settings. |
 | `utils.py` | Reusable functions shared across pipeline scripts: road network loading (`load_road_network`), camera API access (`load_camera_data`), Voronoi polygon generation (`build_voronoi_polygons`), BPR speed-flow function, density-speed fundamental diagram, signal phase generation (`generate_signal_phase`), vehicle count data parsing (`split_data_yolo`, `split_data_own`, `split_data_by_type`), line direction calculation, and emission file reading. |
 
 ---
@@ -70,20 +70,6 @@ For more detailed explanation, please refer to [pipeline_documentation.md](pipel
 | **2-dta** | OpenStreetMap network + mobile-phone OD data | Partial | Network setup (from OpenStreetMap) and [DTALite simulation](https://github.com/asu-trans-ai-lab/DTALite/tree/main) are open; OD calibration from proprietary mobility data (e.g., Cuebiq, SafeGraph, NY MPO) is restricted; fundamental diagram calibration from proprietary traffic flow data (e.g., INRIX, TomTom) is restricted. |
 | **3-moves** | DTALite outputs + MOVES-Matrix engine | Partial | Input-generation scripts are open. [MOVES-Matrix](https://tse.ce.gatech.edu/development-of-moves-matrix/) and county-level emission-factor matrices must be obtained separately from Georgia Tech. |
 | **4-scenario** | MOVES-Matrix output tables | Partial | Scenario evaluation and visualization run fully with the outputs of MOVES-Matrix. |
-
----
-
-## Key Parameters
-
-| Parameter | Value | Source |
-|-----------|-------|--------|
-| BPR alpha / beta | 0.15 / 4 | Highway Capacity Manual (HCM) |
-| Free-flow speed (motorway / primary / secondary / residential) | 70 / 60 / 40 / 30 mph | Calibrated from INRIX speed data |
-| Signal green ratio (default) | 0.5 | Symmetric split assumption |
-| Vehicle deceleration | 0.2g (4.385 mph/s) | Standard comfortable deceleration |
-| MOVES source types | 13 types (ID 11-62) | EPA MOVES model specification |
-| Target pollutants | CO, NOx, CO2, PM2.5 | — |
-| Unit conversion (meter to mile) | 0.000621371 | — |
 
 ---
 

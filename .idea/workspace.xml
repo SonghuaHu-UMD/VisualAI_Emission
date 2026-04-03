@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e94f5c0b-e1d5-40ac-b8f3-6178a8a93971" name="Changes" comment="NS_Final">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="e94f5c0b-e1d5-40ac-b8f3-6178a8a93971" name="Changes" comment="NS_Final" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -602,39 +599,7 @@
       <workItem from="1769604081052" duration="626000" />
       <workItem from="1769605463538" duration="266000" />
       <workItem from="1775179477449" duration="7958000" />
-      <workItem from="1775192939700" duration="1598000" />
-    </task>
-    <task id="LOCAL-00019" summary="NY_New">
-      <option name="closed" value="true" />
-      <created>1709049964076</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1709049964076</updated>
-    </task>
-    <task id="LOCAL-00020" summary="NY_New">
-      <option name="closed" value="true" />
-      <created>1709951189978</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1709951189978</updated>
-    </task>
-    <task id="LOCAL-00021" summary="NY_New">
-      <option name="closed" value="true" />
-      <created>1710130607559</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1710130607559</updated>
-    </task>
-    <task id="LOCAL-00022" summary="NY_New">
-      <option name="closed" value="true" />
-      <created>1713221286489</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1713221286489</updated>
+      <workItem from="1775192939700" duration="1902000" />
     </task>
     <task id="LOCAL-00023" summary="NY_New">
       <option name="closed" value="true" />
@@ -996,7 +961,39 @@
       <option name="project" value="LOCAL" />
       <updated>1775187320436</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="NS_Final">
+      <option name="closed" value="true" />
+      <created>1775215041188</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1775215041188</updated>
+    </task>
+    <task id="LOCAL-00069" summary="NS_Final">
+      <option name="closed" value="true" />
+      <created>1775215064245</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1775215064245</updated>
+    </task>
+    <task id="LOCAL-00070" summary="NS_Final">
+      <option name="closed" value="true" />
+      <created>1775215141177</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1775215141177</updated>
+    </task>
+    <task id="LOCAL-00071" summary="NS_Final">
+      <option name="closed" value="true" />
+      <created>1775215307942</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1775215307942</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
