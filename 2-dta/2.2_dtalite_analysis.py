@@ -6,7 +6,7 @@ from IPython.core.pylabtools import figsize
 from tqdm import tqdm
 from shapely.geometry import Point, LineString
 import os
-from scipy.ndimage.filters import gaussian_filter1d
+from scipy.ndimage import gaussian_filter1d
 import contextily as ctx
 import requests
 from scipy.optimize import curve_fit

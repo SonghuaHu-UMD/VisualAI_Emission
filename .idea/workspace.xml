@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e94f5c0b-e1d5-40ac-b8f3-6178a8a93971" name="Changes" comment="NC_Final">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-visual/0.0_image2video.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/0.0_image2video.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-visual/1.0_camera2traffic.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.0_camera2traffic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1-visual/1.1_camera_traffic_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.1_camera_traffic_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-visual/1.2_camera_signal_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.2_camera_signal_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-visual/1.3_camera_vehicle_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.3_camera_vehicle_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2-dta/2.1_dtalite_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/2-dta/2.1_dtalite_run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2-dta/2.2_dtalite_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/2-dta/2.2_dtalite_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2-dta/2.3_VSD_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/2-dta/2.3_VSD_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-moves/3.0_moves_prepare_link.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-moves/3.0_moves_prepare_link.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-moves/3.1_moves_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-moves/3.1_moves_matrix.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3-moves/3.2_emission_results.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-moves/3.2_emission_results.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/4-scenario/4.0_scenario_moves_prepare_link.py" beforeDir="false" afterPath="$PROJECT_DIR$/4-scenario/4.0_scenario_moves_prepare_link.py" afterDir="false" />
     </list>
@@ -604,15 +611,7 @@
       <workItem from="1769328210169" duration="2389000" />
       <workItem from="1769604081052" duration="626000" />
       <workItem from="1769605463538" duration="266000" />
-      <workItem from="1775179477449" duration="2257000" />
-    </task>
-    <task id="LOCAL-00015" summary="NY_New">
-      <option name="closed" value="true" />
-      <created>1704261410539</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1704261410539</updated>
+      <workItem from="1775179477449" duration="4800000" />
     </task>
     <task id="LOCAL-00016" summary="NY_New">
       <option name="closed" value="true" />
@@ -998,7 +997,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769038816242</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="NC_Final">
+      <option name="closed" value="true" />
+      <created>1775181774162</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1775181774164</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

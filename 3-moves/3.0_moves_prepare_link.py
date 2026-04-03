@@ -110,6 +110,10 @@ for e_ess in ess:
             speed1[['linkID', 'secondID', 'speed', 'grade']].to_csv(
                 r'D:\NY_Emission\MOVES\input_%s\drivingCycle_signal_%s.csv' % (e_ess, kk), index=False)
         else:  # Output drivingCycle: with signal:
+            # Generate signal phase (Is_1): 1=green/moving, 0=red/stopped
+            from utils import generate_signal_phase
+            speed1 = generate_signal_phase(speed1)
+
             speed1['raw_speed'] = speed1['speed']
             speed1['speed'] = speed1['speed'] * speed1['Is_1']
 
@@ -137,7 +141,7 @@ for e_ess in ess:
             idx_head1 = idx_head1.difference(indxn)
             idx_tail1 = idx_tail1.difference(indxn)
 
-            speed1['speed'] = speed1['speed'].fillna(method='ffill').fillna(method='bfill')
+            speed1['speed'] = speed1['speed'].ffill().bfill()
             speed1.loc[idx_head5, 'speed'] = np.nan
             speed1.loc[idx_tail5, 'speed'] = np.nan
             speed1['p_ct'] = speed1.groupby(["cc_gp"])["speed"].transform("count")
@@ -245,7 +249,7 @@ for e_ess in ess:
     voronois = voronois.reset_index()
 
     # Sjoin with camera
-    SInBG = gpd.sjoin(cams_gpd, voronois, how='inner', op='within').reset_index(drop=True)
+    SInBG = gpd.sjoin(cams_gpd, voronois, how='inner', predicate='within').reset_index(drop=True)
     SInBG_index = SInBG[['id', 'index']].drop_duplicates(subset='index', keep='first')
     voronois = voronois.merge(SInBG_index, on='index', how='left')
 

@@ -177,7 +177,7 @@ def calcopmode(driveschedulesecondlink, path, taskid):
     sourcetypeparam.append([1.63041, 0, 0.00418844, 24.601, 17.1])
     os.chdir(path)
 
-    drivecycle = pd.read_csv(driveschedulesecondlink + ".csv").head(10000)
+    drivecycle = pd.read_csv(driveschedulesecondlink + ".csv")
     drivecycle['acc'] = drivecycle.groupby('linkID')['speed'].diff().fillna(0)
     sch_linkid = drivecycle['linkID'].tolist()
     # sch_id = drivecycle['secondID'].tolist()
@@ -190,7 +190,7 @@ def calcopmode(driveschedulesecondlink, path, taskid):
     gc.collect()
     global opmodedistributiondf
     opmodedistributiondf = pd.DataFrame()
-    for jj1 in [12]: # tqdm(range(0, 13))
+    for jj1 in tqdm(range(0, 13)):
         temp_opmode = {}
         temp_vsp = [0 for x in range(len(sch_speed))]
         for jj2 in range(0, len(sch_speed)):

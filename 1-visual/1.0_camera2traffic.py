@@ -171,10 +171,9 @@ t_list = pd.date_range(datetime(2023, 12, 5), datetime(2023, 12, 6), freq='h')
 t_list = [var.strftime("%Y_%m_%d_%H") for var in t_list]
 exist_lt = os.listdir(cdir)
 
-for tdate in t_list[10:11]:
-    tdate = '2023_12_05_11'
+for tdate in t_list:
     # %%
-    for ff in tqdm(allfiles[0:1]):
+    for ff in tqdm(allfiles):
         print(ff)
         # ff = '1572a83a-0a4f-4a7b-84a0-fec0890a2de3.mp4'
         # ff = 'a4c12003-9638-473d-bfe3-dddf509c80b8.mp4'

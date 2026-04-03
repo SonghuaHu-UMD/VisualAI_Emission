@@ -12,7 +12,7 @@ import ast
 import matplotlib as mpl
 import contextily as ctx
 import os
-from scipy.ndimage.filters import gaussian_filter1d
+from scipy.ndimage import gaussian_filter1d
 from scipy.spatial import Voronoi
 import shapely
 from shapely import geometry, ops

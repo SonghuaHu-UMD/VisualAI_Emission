@@ -160,7 +160,7 @@ for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
     node = node[node['node_id'].isin(link_node)].reset_index(drop=True)
 
     # node and TAZ join: assign zone id (TAZ) to node
-    SInBG = gpd.sjoin(node, Need_TAZ, how='inner', op='within').reset_index(drop=True)
+    SInBG = gpd.sjoin(node, Need_TAZ, how='inner', predicate='within').reset_index(drop=True)
     SInBG_index = SInBG[['node_id', 'TAZID_2019']]
     node_speed = link.groupby('from_node_id')[['free_speed', 'capacity']].mean().reset_index()
     node_speed.columns = ['node_id', 'node_speed', 'node_cap']
@@ -177,7 +177,7 @@ for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
     # We don't need such a large network
     Need_TAZ_D = Need_TAZ.dissolve()
     Need_TAZ_D['geometry'] = Need_TAZ_D['geometry'].convex_hull
-    SInBG = gpd.sjoin(node, Need_TAZ_D, how='inner', op='within').reset_index(drop=True)
+    SInBG = gpd.sjoin(node, Need_TAZ_D, how='inner', predicate='within').reset_index(drop=True)
     node = node[node['node_id'].isin(SInBG['node_id'])].reset_index(drop=True)
     link = link[(link['from_node_id'].isin(SInBG['node_id'])) & (link['to_node_id'].isin(SInBG['node_id']))
                 ].reset_index(drop=True)

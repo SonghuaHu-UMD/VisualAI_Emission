@@ -48,7 +48,8 @@ def get_url(url):
             with open(r'E:\Traffic_camera\NY\%s_%s.jpg' % (url.split('/')[-2], time.time()), 'wb') as h:
                 h.write(img)
             time.sleep(2)
-        except:
+        except Exception as e:
+            print(f"Error downloading {url}: {e}")
             time.sleep(2)
 
 
@@ -109,6 +110,6 @@ for kk in all_ids:
     try:
         clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files[0:600], fps=1)
         clip.write_videofile('/home/hu/NY_Vedio//%s.mp4' % kk)
-    except:
-        print(kk)
+    except Exception as e:
+        print(f"Error creating video for {kk}: {e}")
         error_list.append(kk)

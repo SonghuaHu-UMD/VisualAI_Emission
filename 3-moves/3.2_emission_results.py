@@ -6,7 +6,7 @@ import glob
 import numpy as np
 import re
 import seaborn as sns
-from scipy.ndimage.filters import gaussian_filter1d
+from scipy.ndimage import gaussian_filter1d
 from tqdm import tqdm
 from scipy.optimize import curve_fit
 import contextily as ctx

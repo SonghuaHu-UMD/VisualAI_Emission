@@ -24,8 +24,8 @@ def dens_spd_func(x, ffs, k_critical, mm):  # fundamental diagram model (density
     return ffs / np.power(dominator, order)
 
 
-def bpr_function(x, ffs, alpha, beta):
-    # 0.15, 4
+def bpr_function(x, ffs, alpha=0.15, beta=4):
+    """BPR speed-flow function. Default params per HCM: alpha=0.15, beta=4."""
     return ffs / (1 + alpha * np.power(x, beta))
 
 
@@ -79,7 +79,7 @@ def shift_peak(assign_all, r_rr):
     # Recalculate speed
     assign_all['vcratio'] = assign_all['volume_new'] / assign_all['capacity']
     # assign_all.groupby('rtype')[['vcratio']].mean()
-    assign_all['speed_bpr_new'] = assign_all.apply(lambda x: bpr_function(x.vcratio, x.ffs, x.alpha, x.belta),
+    assign_all['speed_bpr_new'] = assign_all.apply(lambda x: bpr_function(x.vcratio, x.ffs, x.alpha, x.beta),
                                                    axis=1)
     return assign_all
 
@@ -91,7 +91,7 @@ def mode_shift(assign_all, r_rr):
     # Recalculate speed
     assign_all['vcratio'] = assign_all['volume_new'] / assign_all['capacity']
     # assign_all.groupby('rtype')[['vcratio']].mean()
-    assign_all['speed_bpr_new'] = assign_all.apply(lambda x: bpr_function(x.vcratio, x.ffs, x.alpha, x.belta),
+    assign_all['speed_bpr_new'] = assign_all.apply(lambda x: bpr_function(x.vcratio, x.ffs, x.alpha, x.beta),
                                                    axis=1)
     return assign_all
 
@@ -110,9 +110,9 @@ for e_ess in tqdm(ess):
     osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
     osm_mt = osm_mt[['link_type_', 'linkID', 'tmc_code', 'Is_signal', 'geometry', 'Original', 'Cross',
                      'length', 'lanes', 'free_speed', 'capacity']]
-    # osm_mt['alpha'] = 10
-    # osm_mt['belta'] = 5
-    # osm_mt['ffs'] = 60
+    # BPR parameters: standard values per HCM (alpha=0.15, beta=4)
+    osm_mt['alpha'] = 0.15
+    osm_mt['beta'] = 4
     osm_mt.loc[osm_mt['Original'] == 'motorway', 'ffs'] = 70
     osm_mt.loc[osm_mt['Original'] == 'primary', 'ffs'] = 60
     osm_mt.loc[osm_mt['Original'] == 'secondary', 'ffs'] = 40
@@ -130,7 +130,7 @@ for e_ess in tqdm(ess):
     assign_all = assign_all.merge(osm_mt, on=['linkID'])
     assign_all['vcratio'] = assign_all['volume_hourly'] / assign_all['capacity']
     # assign_all.groupby('rtype')[['vcratio']].median()
-    assign_all['speed_bpr'] = assign_all.apply(lambda x: bpr_function(x.vcratio, x.ffs, x.alpha, x.belta), axis=1)
+    assign_all['speed_bpr'] = assign_all.apply(lambda x: bpr_function(x.vcratio, x.ffs, x.alpha, x.beta), axis=1)
 
     # Calculate speed based on demand
     if e_ess == 's_raw':
@@ -166,7 +166,10 @@ for e_ess in tqdm(ess):
         checkpoint_dir = Path(r'D:\NY_Emission\MOVES\input_%s' % e_ess)
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
-        # set(osm_mt['Original']): {'motorway', 'primary', 'residential', 'secondary'}
+        # Generate signal phase (Is_1): 1=green/moving, 0=red/stopped
+        from utils import generate_signal_phase
+        speed1 = generate_signal_phase(speed1)
+
         speed1['raw_speed'] = speed1['speed']
         speed1['speed'] = speed1['speed'] * speed1['Is_1']
 
@@ -195,7 +198,7 @@ for e_ess in tqdm(ess):
         idx_head1 = idx_head1.difference(indxn)
         idx_tail1 = idx_tail1.difference(indxn)
 
-        speed1['speed'] = speed1['speed'].fillna(method='ffill').fillna(method='bfill')
+        speed1['speed'] = speed1['speed'].ffill().bfill()
         speed1.loc[idx_head5, 'speed'] = np.nan
         speed1.loc[idx_tail5, 'speed'] = np.nan
         speed1['p_ct'] = speed1.groupby(["cc_gp"])["speed"].transform("count")
@@ -299,7 +302,7 @@ for e_ess in tqdm(ess):
     voronois = voronois.reset_index()
 
     # Sjoin with camera
-    SInBG = gpd.sjoin(cams_gpd, voronois, how='inner', op='within').reset_index(drop=True)
+    SInBG = gpd.sjoin(cams_gpd, voronois, how='inner', predicate='within').reset_index(drop=True)
     SInBG_index = SInBG[['id', 'index']].drop_duplicates(subset='index', keep='first')
     voronois = voronois.merge(SInBG_index, on='index', how='left')
 

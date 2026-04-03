@@ -40,7 +40,7 @@ county_us = gpd.read_file(r'G:\Data\SafeGraph\Open Census Data\Census Website\20
 county_mt = county_us[county_us['NAMELSAD'] == 'New York County']
 county_mt = county_mt.to_crs('EPSG:32618')
 county_mt['geometry'] = county_mt['geometry'].buffer(100)
-osm_mt = gpd.sjoin(osm, county_mt, how='inner', op='intersects')
+osm_mt = gpd.sjoin(osm, county_mt, how='inner', predicate='intersects')
 osm_mt = osm_mt[~osm_mt['STATEFP'].isnull()].reset_index(drop=True)
 # osm_mt = gpd.overlay(osm, county_us, how='union').explode().reset_index(drop=True)
 
@@ -179,12 +179,12 @@ for kk in ['c1', 'c2', 'c3', 'c4']: allcount = split_data(allcount, kk)
 allcount['green_1'] = 0
 allcount.loc[allcount['l_color'] == 'green', 'green_1'] = 1
 allcount.loc[allcount['l_color'].isnull(), 'green_1'] = np.nan
-allcount['green_1'] = allcount['green_1'].fillna(method='ffill')
+allcount['green_1'] = allcount['green_1'].ffill()
 
 g = allcount['green_1'].ne(allcount['green_1'].shift()).cumsum()
 allcount['Count'] = allcount.groupby(g)['green_1'].transform('size') * np.where(allcount['green_1'], 1, -1)
 allcount.loc[allcount['Count'].abs() < 3, 'green_1'] = np.nan
-allcount['green_1'] = allcount['green_1'].fillna(method='ffill')
+allcount['green_1'] = allcount['green_1'].ffill()
 allcount.loc[allcount['green_1'] == 0, 'c3_total_s'] = 0
 
 allcount = allcount[(allcount['Unnamed: 0'] > 480) & (allcount['Unnamed: 0'] < 1100 - 200)].reset_index(drop=True)
