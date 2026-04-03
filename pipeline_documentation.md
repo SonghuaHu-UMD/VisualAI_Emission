@@ -244,10 +244,14 @@ This module evaluates **transportation and policy scenarios** and quantifies the
 ### **4.0_scenario_moves_prepare_link.py**
 **Purpose:** Generate new MOVES-Matrix input files for each policy scenario.  
 **Scenario Types:**
-- **Peak-hour shift (10–30%)** — redistribute traffic from 7–8 & 16–17 to shoulders (6,9,15,18).  
-- **Mode shift (10–30%)** — transfer car volume to public transit.  
+- **Peak-hour shift (10-30%)** — redistribute traffic from 7-8 & 16-17 to shoulder hours (6,9,15,18).  
+- **Mode shift (10-30%)** — transfer car volume to public transit (reduce cars, increase buses).
+- **Congestion pricing** — evaluate volume/speed changes at 2/4/6/8 weeks after NYC congestion pricing launch.
+- **BPR speed estimation** — uses standard HCM parameters (alpha=0.15, beta=4) to compute congested speeds from volume/capacity ratio.
+- **Signal phase simulation** — generates second-by-second driving cycles with stop-and-go patterns at signalized intersections.
+
 **Outputs:**  
-`MOVES/input_mode10`, `input_peak20`, etc.
+`MOVES/input_s_mode10/`, `input_s_peak20/`, `input_s_cong_4/`, etc.
 
 ---
 
