@@ -1,5 +1,9 @@
 # Ubiquitous Data-Driven Framework for Traffic Emission Estimation and Policy Evaluation
 
+**Published in *Nature Sustainability***: [https://www.nature.com/articles/s41893-026-01797-9](https://www.nature.com/articles/s41893-026-01797-9)
+
+**Authors**: Songhua Hu, Paolo Santi, Tom Benson, Xuesong Zhou, An Wang, Ashutosh Kumar & Carlo Ratti
+
 ---
 
 ## Overview
