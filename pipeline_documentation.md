@@ -1,9 +1,35 @@
-# 📘 Ubiquitous Data-Driven Emission Framework — Detailed Documentation
+# Ubiquitous Data-Driven Emission Framework — Detailed Documentation
 ### *Code Structure, Execution Pipeline, and Inter-Module Dependencies*
 
 ---
 
-## 🔁 Complete Pipeline Overview
+## Shared Infrastructure
+
+### **config.py**
+Centralized configuration for the entire project. Contains:
+- **Data paths**: root directories, shapefile paths, pickle paths, MOVES I/O directories.
+- **Coordinate reference systems**: WGS84, UTM 18N, Web Mercator.
+- **MOVES constants**: 13 source type IDs/names, camera-to-source-type mapping, target pollutants.
+- **BPR parameters**: alpha=0.15, beta=4 (per Highway Capacity Manual).
+- **Free-flow speeds**: 70/60/40/30 mph by road type (motorway/primary/secondary/residential).
+- **Unit conversions**: meter-to-mile (0.000621371), mph-to-m/s (0.44704).
+- **Plot style**: consistent matplotlib rcParams across all visualization scripts.
+
+### **utils.py**
+Shared utility functions eliminating code duplication across pipeline scripts:
+- `load_road_network()` — Load OSM signal network pickle, create linkID, deduplicate.
+- `load_camera_data()` — Fetch camera locations from NYC TMC API.
+- `build_voronoi_polygons()` — Generate Thiessen polygons from camera points, clip to boundary.
+- `bpr_function()` — Bureau of Public Roads speed-flow function with standard HCM defaults.
+- `density_speed_function()` — Fundamental diagram model for VSD calibration.
+- `generate_signal_phase()` — Create binary signal phase column (Is_1) for driving cycle simulation.
+- `split_data_yolo()`, `split_data_own()`, `split_data_by_type()` — Parse vehicle detection counts.
+- `line_direction()` — Calculate direction angle of road link geometries.
+- `read_emission_files()` — Read and concatenate MOVES-Matrix emission output CSVs.
+
+---
+
+## Complete Pipeline Overview
 
 ### Step 1 — Visual AI Processing  
 **Scripts:** `0.0_image2video.py`, `1.0_camera2traffic.py`, `1.1`, `1.2`, `1.3`  
@@ -192,7 +218,8 @@ This stage translates link-level speeds into **link–hour emission factors** us
 ### **3.1_moves_matrix.py**
 **Purpose:** Interface with MOVES-Matrix engine (developed by Georgia Tech).  
 **Functionality:**
-- Calls the MOVES-Matrix executable via batch mode.  
+- Calls the MOVES-Matrix executable via batch mode.
+- Computes VSP (Vehicle Specific Power) and operating mode distributions for all **13 MOVES source types** (motorcycles through combination trucks).
 - Reads pre-generated county-level emission factors (by Georgia Tech).  
 - Produces link-hour emission estimates for each pollutant.  
 **Output:**  
