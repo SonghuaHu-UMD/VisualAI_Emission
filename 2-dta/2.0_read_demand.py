@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 import glob
 import seaborn as sns
 from tqdm import tqdm
-import os
 import datetime
 from functools import reduce
 

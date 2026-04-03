@@ -175,9 +175,6 @@ for tdate in t_list:
     # %%
     for ff in tqdm(allfiles):
         print(ff)
-        # ff = '1572a83a-0a4f-4a7b-84a0-fec0890a2de3.mp4'
-        # ff = 'a4c12003-9638-473d-bfe3-dddf509c80b8.mp4'
-        # ff = 'GH040143.MP4'
         vidcap = cv2.VideoCapture(f"{vdir}/{tdate}/{ff}")
         I_W = int(vidcap.get(3))
         I_H = int(vidcap.get(4))

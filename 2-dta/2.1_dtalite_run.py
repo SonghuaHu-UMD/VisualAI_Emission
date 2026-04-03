@@ -1,12 +1,8 @@
 # Do the DTA and output the link volume for each period under different scenarios
-from sys import stdin
-
 import geopandas as gpd
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-import seaborn as sns
 import subprocess
 import os
 import osm2gmns as og

@@ -1,14 +1,10 @@
 import pandas as pd
 import geopandas as gpd
-import os
 import matplotlib.pyplot as plt
 import glob
 import numpy as np
 import re
 import seaborn as sns
-from scipy.ndimage import gaussian_filter1d
-from tqdm import tqdm
-from scipy.optimize import curve_fit
 import contextily as ctx
 import mapclassify
 import datetime
@@ -26,6 +22,34 @@ plt.rcParams.update(
      'lines.linewidth': 1.5, 'legend.frameon': False, 'savefig.bbox': 'tight', 'savefig.pad_inches': 0.05})
 
 nmap = {1: 'TGH', 2: 'CO', 3: 'NOx', 87: 'VOC', 90: 'CO2', 91: 'TEC', 98: 'CO2E', 100: 'PM10', 110: 'PM2.5'}
+METER_TO_MILE = 0.000621371
+
+
+def read_emission_csv(pattern, suffix=''):
+    """Read and concatenate emission output CSVs from a glob pattern."""
+    all_files = glob.glob(pattern)
+    frames = []
+    for kk in all_files:
+        df = pd.read_csv(kk)
+        df['Hour'] = re.findall(r'\d+', kk)[0]
+        df['emquant'] = df['emquant'] * METER_TO_MILE
+        frames.append(df)
+    if not frames:
+        return pd.DataFrame()
+    result = pd.concat(frames)
+    result['Hour'] = result['Hour'].astype(int)
+    result = result.sort_values(by=['linkID', 'pollutantID', 'Hour'])
+    result = result.replace({'pollutantID': nmap})
+    if suffix:
+        result.columns = ['linkID', 'pollutantID', f'emrate_{suffix}', f'emquant_{suffix}', 'Hour']
+    return result
+
+
+def load_road_network(pkl_path=r'E:\NY_Emission\Shp\osmdta_ritis_signal.pkl'):
+    """Load road network, create linkID, deduplicate."""
+    osm = pd.read_pickle(pkl_path)
+    osm['linkID'] = osm['from_node_'].astype(str) + '_' + osm['to_node_id'].astype(str)
+    return osm.drop_duplicates(subset=['linkID']).reset_index(drop=True)
 
 
 def split_data_by_type(count_df, y_var='peds', f_name='car_st', v_name='person'):
@@ -58,10 +82,7 @@ signal_modes = no_signals.merge(with_signals, on=['sourceTypeID', 'linkID', 'opM
 signal_modes = signal_modes.fillna(0)
 signal_modes['diff'] = 100 * (signal_modes['opmodect_with_signal'] - signal_modes['opmodect_no_signal']) / 3600
 
-osm_mt = pd.read_pickle(r'E:\NY_Emission\Shp\osmdta_ritis_signal.pkl')
-osm_mt['linkID'] = osm_mt['from_node_'].astype(str) + '_' + osm_mt['to_node_id'].astype(str)
-osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
-# osm_mt.drop('Cross_fclass', axis=1).to_file(r'E:\NY_Emission\Shp\osmdta_ritis_signal.shp')
+osm_mt = load_road_network()
 signal_modes = signal_modes.merge(osm_mt[['linkID', 'Cross', 'Original', 'Is_signal']], on='linkID')
 
 sns.set_palette(sns.color_palette('coolwarm', 3))
@@ -130,39 +151,14 @@ for pid in ['CO', 'NOx', 'CO2', 'PM10', 'PM2.5']:
     plt.close()
 
 #### 4. ablation analysis ####
-# Read emission: base
-all_files_inrix = glob.glob(r'E:\NY_Emission\MOVES\output_inrix\*_emissionbylink.csv')
-emission_inrix = pd.DataFrame()
-for kk in all_files_inrix:
-    df = pd.read_csv(kk)
-    df['Hour'] = re.findall(r'\d+', kk)[0]
-    df['emquant'] = df['emquant'] * 0.000621371  # meter to miles since emrate is g/mile/hour
-    emission_inrix = pd.concat([emission_inrix, df])
-emission_inrix['Hour'] = emission_inrix['Hour'].astype(int)
-emission_inrix.loc[emission_inrix['Hour'] > 23, 'Hour'] = (emission_inrix.loc[emission_inrix['Hour'] > 23, 'Hour'] - 24)
-emission_inrix = emission_inrix.sort_values(by=['linkID', 'pollutantID', 'Hour'])
-emission_inrix = emission_inrix.replace({'pollutantID': nmap})
-emission_inrix.columns = ['linkID', 'pollutantID', 'emrate_inrix', 'emquant_inrix', 'Hour']
-
-# Read emission: with signal
-all_files_signal = glob.glob(r'E:\NY_Emission\MOVES\output_signal\*_emissionbylink.csv')
-emission_signal = pd.DataFrame()
-for kk in all_files_signal:
-    df = pd.read_csv(kk)
-    df['Hour'] = re.findall(r'\d+', kk)[0]
-    df['emquant'] = df['emquant'] * 0.000621371  # meter to mile since emrate is g/mile/vehicle
-    emission_signal = pd.concat([emission_signal, df])
-emission_signal['Hour'] = emission_signal['Hour'].astype(int)
-emission_signal = emission_signal.sort_values(by=['linkID', 'pollutantID', 'Hour'])
-emission_signal = emission_signal.replace({'pollutantID': nmap})
-emission_signal.columns = ['linkID', 'pollutantID', 'emrate_signal', 'emquant_signal', 'Hour']
+# Read emission: base (no signal) and with signal
+emission_inrix = read_emission_csv(r'E:\NY_Emission\MOVES\output_inrix\*_emissionbylink.csv', suffix='inrix')
+emission_inrix.loc[emission_inrix['Hour'] > 23, 'Hour'] -= 24
+emission_signal = read_emission_csv(r'E:\NY_Emission\MOVES\output_signal\*_emissionbylink.csv', suffix='signal')
 
 # Merge
 emi_all = emission_signal.merge(emission_inrix, on=['linkID', 'pollutantID', 'Hour'], how='inner')
-osm_mt = pd.read_pickle(r'E:\NY_Emission\Shp\osmdta_ritis_signal.pkl')
-osm_mt['linkID'] = osm_mt['from_node_'].astype(str) + '_' + osm_mt['to_node_id'].astype(str)
-osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
-# osm_mt.drop('Cross_fclass', axis=1).to_file(r'E:\NY_Emission\Shp\osmdta_ritis_signal.shp')
+osm_mt = load_road_network()
 emi_all = emi_all.merge(osm_mt[['linkID', 'Cross', 'Original', 'Is_signal']], on='linkID')
 
 # Get need pollutants
@@ -250,10 +246,7 @@ emi_dayp = emi_all.groupby(['pollutantID'])[['emquant_', 'emquant_cd', 'emquant_
 
 
 # Merge with road features
-osm_mt = pd.read_pickle(r'E:\NY_Emission\Shp\osmdta_ritis_signal.pkl')
-osm_mt['linkID'] = osm_mt['from_node_'].astype(str) + '_' + osm_mt['to_node_id'].astype(str)
-osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
-# osm_mt.drop('Cross_fclass', axis=1).to_file(r'E:\NY_Emission\Shp\osmdta_ritis_signal.shp')
+osm_mt = load_road_network()
 emi_all = emi_all.merge(osm_mt[['linkID', 'Cross', 'Original', 'Is_signal']], on='linkID')
 
 # Check emission variation near bridge density

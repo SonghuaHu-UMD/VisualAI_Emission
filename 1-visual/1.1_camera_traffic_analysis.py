@@ -1,7 +1,6 @@
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
-import datetime
 import requests
 import json
 import seaborn as sns

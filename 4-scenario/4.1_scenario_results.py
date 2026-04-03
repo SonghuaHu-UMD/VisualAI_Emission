@@ -20,6 +20,47 @@ plt.rcParams.update(
      'lines.linewidth': 1.5, 'legend.frameon': False, 'savefig.bbox': 'tight', 'savefig.pad_inches': 0.05})
 
 nmap = {1: 'TGH', 2: 'CO', 3: 'NOx', 87: 'VOC', 90: 'CO2', 91: 'TEC', 98: 'CO2E', 100: 'PM10', 110: 'PM2.5'}
+METER_TO_MILE = 0.000621371
+
+
+def load_road_network(pkl_path=r'D:\NY_Emission\Shp\osmdta_ritis_signal.pkl'):
+    """Load road network, create linkID, deduplicate."""
+    osm = pd.read_pickle(pkl_path)
+    osm['linkID'] = osm['from_node_'].astype(str) + '_' + osm['to_node_id'].astype(str)
+    return osm.drop_duplicates(subset=['linkID']).reset_index(drop=True)
+
+
+def read_scenario_emission(scenario_list):
+    """Read and merge emission results for a list of scenarios."""
+    cct = 0
+    emi_merged = None
+    for rr in scenario_list:
+        all_files = glob.glob(r'D:\NY_Emission\MOVES\input_%s\Output\*_emissionbylink.csv' % rr)
+        if not all_files:
+            continue
+        frames = []
+        for kk in all_files:
+            df = pd.read_csv(kk)
+            t_hour = re.findall(r'\d+', kk)
+            t_hour = t_hour[1] if len(t_hour) > 1 else t_hour[0]
+            df['Hour'] = t_hour
+            df['emquant'] = df['emquant'] * METER_TO_MILE
+            tvs = pd.read_csv(r'D:\NY_Emission\MOVES\input_%s\link_NYC_36061_%s.csv' % (rr, t_hour))
+            df = df.merge(tvs[['linkID', 'linkLength', 'linkVolume', 'linkAvgSpeed']], on='linkID')
+            frames.append(df)
+        emission = pd.concat(frames)
+        emission['Hour'] = emission['Hour'].astype(int)
+        emission = emission.sort_values(by=['linkID', 'pollutantID', 'Hour'])
+        emission = emission.replace({'pollutantID': nmap})
+        emission.columns = ['linkID', 'pollutantID', 'emrate_%s' % rr, 'emquant_%s' % rr, 'Hour',
+                            'linkLength_%s' % rr, 'linkVolume_%s' % rr, 'linkAvgSpeed_%s' % rr]
+        if cct == 0:
+            emi_merged = emission
+        else:
+            emi_merged = emi_merged.merge(emission, on=['linkID', 'pollutantID', 'Hour'], how='inner')
+        cct += 1
+    return emi_merged
+
 
 cct = 0
 for rr in ['s_mode10', 's_mode20', 's_mode30', 's_peak10', 's_peak20', 's_peak30', 's_remote10', 's_remote20',
@@ -159,38 +200,10 @@ plt.tight_layout()
 plt.savefig(r'D:\NY_Emission\Figure\E_ev_shift.pdf')
 
 # congestion pricing
-cct = 0
-for rr in ['s_cong_2', 's_cong_4', 's_cong_6', 's_cong_8', 's_raw']:
-    all_files_inrix = glob.glob(r'D:\NY_Emission\MOVES\input_%s\Output\*_emissionbylink.csv' % rr)
-    emission_inrix = pd.DataFrame()
-    if len(all_files_inrix) > 0:
-        for kk in all_files_inrix:
-            df = pd.read_csv(kk)
-            t_hour = re.findall(r'\d+', kk)
-            if len(t_hour) > 1:
-                t_hour = t_hour[1]
-            else:
-                t_hour = t_hour[0]
-            df['Hour'] = t_hour
-            df['emquant'] = df['emquant'] * 0.000621371  # meter to miles since emrate is g/mile/hour
-            tvs = pd.read_csv((r'D:\NY_Emission\MOVES\input_%s\link_NYC_36061_%s.csv' % (rr, t_hour)))
-            df = df.merge(tvs[['linkID', 'linkLength', 'linkVolume', 'linkAvgSpeed']], on='linkID')
-            emission_inrix = pd.concat([emission_inrix, df])
-        emission_inrix['Hour'] = emission_inrix['Hour'].astype(int)
-        emission_inrix = emission_inrix.sort_values(by=['linkID', 'pollutantID', 'Hour'])
-        emission_inrix = emission_inrix.replace({'pollutantID': nmap})
-        emission_inrix.columns = ['linkID', 'pollutantID', 'emrate_%s' % rr, 'emquant_%s' % rr, 'Hour',
-                                  'linkLength_%s' % rr, 'linkVolume_%s' % rr, 'linkAvgSpeed_%s' % rr]
-        if cct == 0:
-            emi_all = emission_inrix
-        else:
-            emi_all = emi_all.merge(emission_inrix, on=['linkID', 'pollutantID', 'Hour'], how='inner')
-        cct += 1
+emi_all = read_scenario_emission(['s_cong_2', 's_cong_4', 's_cong_6', 's_cong_8', 's_raw'])
 
 # Plot spatial dynamics
-osm_mt = pd.read_pickle(r'D:\NY_Emission\Shp\osmdta_ritis_signal.pkl')
-osm_mt['linkID'] = osm_mt['from_node_'].astype(str) + '_' + osm_mt['to_node_id'].astype(str)
-osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
+osm_mt = load_road_network()
 # osm_mt.drop('Cross_fclass', axis=1).to_file(r'D:\NY_Emission\Shp\osmdta_ritis_signal.shp')
 osm_mt_am = osm_mt.merge(emi_all[(emi_all['Hour'] == 8) & (emi_all['pollutantID'] == 'CO2')], on='linkID').reset_index(
     drop=True)
@@ -226,9 +239,7 @@ plt.savefig(r'D:\NY_Emission\Figure\E_congestionprice.pdf')
 
 # link-level change
 # Total volume change
-osm_mt = pd.read_pickle(r'D:\NY_Emission\Shp\osmdta_ritis_signal.pkl')
-osm_mt['linkID'] = osm_mt['from_node_'].astype(str) + '_' + osm_mt['to_node_id'].astype(str)
-osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
+osm_mt = load_road_network()
 
 assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_.pkl')
 assign_all = assign_all[assign_all['hour'] == 8]

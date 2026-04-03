@@ -1,6 +1,5 @@
 ## Prepare MOVES at link level for all scenarios
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -9,7 +8,6 @@ import geopandas as gpd
 import requests
 from scipy.spatial import Voronoi
 import shapely
-from shapely import geometry, ops
 from pathlib import Path
 
 
