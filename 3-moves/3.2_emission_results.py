@@ -248,50 +248,6 @@ for rr in ['cd', 'te', 'hf', 'ss', 'nv', 'ns', '', 'nsp', 'nvo', 'ncamera']:
 emi_all = emi_all[emi_all['pollutantID'].isin(['CO', 'NOx', 'CO2', 'PM2.5'])]
 emi_dayp = emi_all.groupby(['pollutantID'])[['emquant_', 'emquant_cd', 'emquant_te', 'emquant_hf', 'emquant_ss']].sum()
 
-linkids = ['205394_212547', '139_199908', '36991_70', '37461_37462', '36987_37451', '127952_205838', '127909_83',
-           '8253_5756', '239542_242107', '204866_204867', '250349_250350', '201655_253985', '201652_201653',
-           '260635_260633', '124250_124251', '199490_199502', '199488_224461', '683_684', '205615_37143',
-           '237147_237148', '199563_199564']
-# Plot spatial map: by pollutants
-plot_y = 'emrate_'
-for kk in ['CO', 'NOx', 'CO2', 'PM2.5']:
-    # hour_in = 8
-    emi_all_need = emi_all[(emi_all['pollutantID'] == kk)]
-    if kk in ['CO', 'NOx']:
-        emi_all_need[plot_y] = 1.2 * emi_all_need[plot_y] / 1000  # to kg
-    if kk == 'CO2':
-        emi_all_need[plot_y] = 1.2 * emi_all_need[plot_y] / 1e6  # to ton
-    if kk == 'PM2.5':
-        emi_all_need[plot_y] = (1.2 * 1.5 * emi_all_need[plot_y]) / 1e3  # to kg
-    binning = mapclassify.NaturalBreaks(emi_all_need[plot_y], k=5)  # NaturalBreaks
-    emi_all_need['cut_jenks'] = (binning.yb + 1)
-    for hour_in in [3, 8, 16]:
-        # Plot spatial dynamics
-        osm_mt_am = osm_mt.merge(emi_all_need[emi_all_need['Hour'] == hour_in], on='linkID', how='left').reset_index(
-            drop=True)
-        osm_mt_am = osm_mt_am.replace([np.inf, -np.inf], np.nan)
-        osm_mt_am = osm_mt_am.fillna(0)
-        # osm_mt_am[['linkID','emrate_','geometry','emquant_']].to_file(r'E:\NY_Emission\Shp\osm_mt_am_emrate.shp')
-        AvgErate = osm_mt_am['emrate_'].mean()
-        BridErate = osm_mt_am[osm_mt_am['linkID'].isin(linkids)]['emrate_'].mean()
-        print('Hour: %s Polluant %s AvgErate: %s BridErate: %s Pct: %s' % (
-            hour_in, kk, AvgErate, BridErate, (BridErate - AvgErate) / AvgErate))
-        osm_mt_am = osm_mt_am.to_crs('EPSG:32618')
-        fig, ax = plt.subplots(figsize=(3.5, 7))
-        mpl.rcParams['text.color'] = 'w'
-        osm_mt_am.plot(column=plot_y, cmap='RdYlGn_r', scheme="user_defined",
-                       classification_kwds={'bins': binning.bins},
-                       lw=osm_mt_am['cut_jenks'], ax=ax, alpha=0.6, legend=True,
-                       legend_kwds={'labelcolor': 'white', "fmt": "{:.2f}", 'ncol': 1, 'title': kk,
-                                    'loc': 'upper left', 'frameon': True, 'facecolor': 'k', 'edgecolor': 'k',
-                                    'framealpha': 0.5})
-        mpl.rcParams['text.color'] = 'k'
-        ctx.add_basemap(ax, crs=osm_mt_am.crs, source=ctx.providers.CartoDB.DarkMatter, alpha=0.9)
-        plt.subplots_adjust(top=0.99, bottom=0.003, left=0.0, right=1.0, hspace=0.0, wspace=0.0)
-        # plt.tight_layout()
-        plt.axis('off')
-        plt.savefig(r'E:\NY_Emission\Figure\pollutant_spatial_distribution_%s_%s.pdf' % (kk, hour_in))
-        plt.close()
 
 # Merge with road features
 osm_mt = pd.read_pickle(r'E:\NY_Emission\Shp\osmdta_ritis_signal.pkl')

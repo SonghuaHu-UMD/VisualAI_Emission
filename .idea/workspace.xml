@@ -5,14 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e94f5c0b-e1d5-40ac-b8f3-6178a8a93971" name="Changes" comment="NC_Final">
-      <change beforePath="$PROJECT_DIR$/1-visual/0.2_vehicle_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/0.2_vehicle_classification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-visual/1.2_camera_signal_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.2_camera_signal_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-visual/1.3_camera_vehicle_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.3_camera_vehicle_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-visual/1.1_camera_traffic_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-visual/1.1_camera_traffic_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2-dta/2.2_dtalite_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/2-dta/2.2_dtalite_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-moves/3.2_emission_results.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-moves/3.2_emission_results.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/4-scenario/4.0_scenario_moves_prepare_link.py" beforeDir="false" afterPath="$PROJECT_DIR$/4-scenario/4.0_scenario_moves_prepare_link.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="28" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -41,18 +46,22 @@
     &quot;assignee&quot;: &quot;SonghuaHu-UMD&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/SonghuaHu-UMD/VisualAI_Emission.git",
-    "accountId": "8ce2b5fc-ef50-40e6-8852-5a4dc77d67fa"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SonghuaHu-UMD/VisualAI_Emission.git&quot;,
+    &quot;accountId&quot;: &quot;8ce2b5fc-ef50-40e6-8852-5a4dc77d67fa&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/anaconda3/envs/geo_env/Lib/site-packages/seaborn/categorical.py" root0="SKIP_INSPECTION" />
     <setting file="file://$USER_HOME$/anaconda3/envs/geo_env/Lib/site-packages/seaborn/regression.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -88,13 +97,17 @@
     "Python.Process_Camera_Video.executor": "Run",
     "Python.emission_street.executor": "Debug",
     "Python.static_camera_video (1).executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "ignore_missing_gitignore": "true",
+    "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "C:/Users/Administrator/PycharmProjects/VisualAI_Emission/4-scenario",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -102,6 +115,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -255,7 +269,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-ca5e2b39c7df-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.308" />
+        <option value="bundled-python-sdk-1cd77e80b48f-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.32098.74" />
       </set>
     </attachedChunks>
   </component>
@@ -585,15 +599,12 @@
       <workItem from="1751328009859" duration="3130000" />
       <workItem from="1751331155323" duration="1249000" />
       <workItem from="1751332416552" duration="1694000" />
-      <workItem from="1769037893340" duration="912000" />
-    </task>
-    <task id="LOCAL-00014" summary="NY_New">
-      <option name="closed" value="true" />
-      <created>1704177240221</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1704177240221</updated>
+      <workItem from="1769037893340" duration="2151000" />
+      <workItem from="1769221977840" duration="30000" />
+      <workItem from="1769328210169" duration="2389000" />
+      <workItem from="1769604081052" duration="626000" />
+      <workItem from="1769605463538" duration="266000" />
+      <workItem from="1775179477449" duration="2257000" />
     </task>
     <task id="LOCAL-00015" summary="NY_New">
       <option name="closed" value="true" />
@@ -979,7 +990,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769038037542</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="NC_Final">
+      <option name="closed" value="true" />
+      <created>1769038816242</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1769038816242</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

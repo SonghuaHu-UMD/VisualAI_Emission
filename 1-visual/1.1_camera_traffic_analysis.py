@@ -176,7 +176,7 @@ ct_sum_h['SU_Truck'] = ct_sum_h['c3_ltruck_s']
 ct_sum_h['C_Truck'] = ct_sum_h['c3_htruck_s']
 ct_sum_h['T_Bus'] = ct_sum_h['c3_bus_s']
 ct_sum_h['S_Bus'] = ct_sum_h['c3_sbus_s']
-ct_sum_h['M_Cycle'] = ct_sum_h['c3_mcycle_s'] * 4
+ct_sum_h['M_Cycle'] = ct_sum_h['c3_mcycle_s']
 ct_sum_h = ct_sum_h[new_nn]
 print(ct_sum_h.sum() / ct_sum_h.sum().sum())
 ct_sum_h['Total'] = ct_sum_h.sum(axis=1)

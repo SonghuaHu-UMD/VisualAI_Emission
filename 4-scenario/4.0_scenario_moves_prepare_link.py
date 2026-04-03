@@ -110,9 +110,9 @@ for e_ess in tqdm(ess):
     osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
     osm_mt = osm_mt[['link_type_', 'linkID', 'tmc_code', 'Is_signal', 'geometry', 'Original', 'Cross',
                      'length', 'lanes', 'free_speed', 'capacity']]
-    osm_mt['alpha'] = 10
-    osm_mt['belta'] = 5
-    osm_mt['ffs'] = 60
+    # osm_mt['alpha'] = 10
+    # osm_mt['belta'] = 5
+    # osm_mt['ffs'] = 60
     osm_mt.loc[osm_mt['Original'] == 'motorway', 'ffs'] = 70
     osm_mt.loc[osm_mt['Original'] == 'primary', 'ffs'] = 60
     osm_mt.loc[osm_mt['Original'] == 'secondary', 'ffs'] = 40

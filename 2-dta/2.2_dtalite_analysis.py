@@ -362,20 +362,6 @@ plt.xlabel('Hour')
 plt.tight_layout()
 plt.savefig(r'D:\NY_Emission\Figure\speed_hourly.pdf')
 
-fig, ax = plt.subplots(figsize=(4.5, 4))
-aadt_avg['volume_hourly_n'] = aadt_avg['volume_hourly'] * 1.1
-aadt_avg.loc[aadt_avg['link_type_name'] == 'motorway', 'volume_hourly_n'] = (
-        aadt_avg.loc[aadt_avg['link_type_name'] == 'motorway', 'volume_hourly_n'] * 1.3)
-for kk in ['motorway', 'primary', 'secondary', 'residential', ]:
-    aadt_avg_t = aadt_avg[aadt_avg['link_type_name'] == kk]
-    ax.plot(aadt_avg_t['hour'], gaussian_filter1d(aadt_avg_t['volume_hourly_n'], sigma=1), '-o', markersize=5, label=kk,
-            alpha=0.9)
-plt.legend(loc='upper left')
-plt.ylabel('Volume')
-plt.xlabel('Hour')
-plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\volume_hourly.pdf')
-
 # 6. Plot OD
 NY_Tract = gpd.read_file(r'D:\\NY_Emission\ODME_NY\OD_File\OD_SHP\od_shp_40.shp')
 NY_Tract = NY_Tract[NY_Tract['CTFIPS'].isin(CT_L)].reset_index(drop=True)
