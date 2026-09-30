@@ -456,8 +456,7 @@ plt.savefig(r'D:\NY_Emission\Figure\OD_FLOW_DEMO.pdf')
 # Read and plot iteration
 sns.set_palette('tab20')
 learning_curve = pd.read_excel(r'D:\NY_Emission\ODME_NY\ODME.xlsx')
-learning_curve['MAE'] = learning_curve['MAE'] * 0.8
-learning_curve['MAPE'] = learning_curve['MAPE'] * 0.8
+# Preserve the MAE and MAPE recorded in ODME.xlsx.
 learning_curve['UE_add'] = learning_curve['UE'] + learning_curve['UE_ODME']
 fig, ax = plt.subplots(figsize=(5, 3.5))
 ax.plot(learning_curve['Iter.'], learning_curve['MAE'], '-o', markersize=3, color='royalblue', alpha=0.8)
