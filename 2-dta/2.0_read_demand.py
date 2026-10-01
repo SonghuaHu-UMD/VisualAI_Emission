@@ -1,3 +1,8 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import DATA_ROOT
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import glob
@@ -12,7 +17,7 @@ CT_NY = ['36047', '36061', '36081', '36085', '36005']
 temp_n = ['325120', '447190', '454310', '541614', '336320', '424720', '221111', '221112', '221113', '221118']
 
 ## 1. Read event OD From MDLD ##
-f_url = r'D:\NY_Emission\ODME_NY\OD_File\MDLD'
+f_url = str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD')
 full_od = pd.concat([pd.read_csv(r"%s\full_od_hour_ny_1.csv" % f_url),
                      pd.read_csv(r"%s\full_od_hour_ny_2.csv" % f_url)], axis=0)
 full_od['timestamp'] = pd.to_datetime(full_od['hour'], errors='coerce', utc=True)
@@ -30,7 +35,7 @@ full_od['end_admin2'] = full_od['end_admin2'].replace(ct_rp, regex=True)
 # Four events: snow storm (2022/1/29); covid (2020/3/21); Thanksgiving Eve (2021/11/24); Henri flooding (2021/8/22);
 # average OD FLOW in hour in county
 full_od_n = full_od[(full_od['start_admin2'].isin(CT_L)) & (full_od['end_admin2'].isin(CT_L))].reset_index(drop=True)
-full_od_n.to_pickle(r'D:\\NY_Emission\ODME_NY\OD_File\MDLD\od_daily_ratio.pkl')
+full_od_n.to_pickle(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/od_daily_ratio.pkl'))
 full_od_avg = full_od_n[(full_od_n['timestamp'].dt.date <= datetime.date(2021, 8, 14)) & (
         full_od_n['timestamp'].dt.date >= datetime.date(2021, 8, 1))]
 full_od_avg = full_od_avg.groupby(['start_admin2', 'end_admin2', 'hour'])['total_trips'].mean().reset_index()
@@ -62,7 +67,7 @@ print(full_od_cd['total_trips'].sum())
 full_ods = reduce(lambda left, right: pd.merge(left, right, on=['start_admin2', 'end_admin2', 'hour'], how='outer'),
                   [full_od_avg, full_od_ss, full_od_hf, full_od_te, full_od_cd])
 full_ods = full_ods.fillna(0)
-full_ods.to_pickle(r'D:\\NY_Emission\ODME_NY\OD_File\MDLD\od_event_ratio.pkl')
+full_ods.to_pickle(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/od_event_ratio.pkl'))
 
 ### 3. Get normal time series ratio from MDLD
 data_path = r'E:\Dewey\Advan\\Neighborhood Patterns - US\\'
@@ -91,11 +96,11 @@ for kk in tqdm(allfile):
 daily_ts = all_visits.groupby('Timestamp').sum()['Visits']
 daily_ts.plot()
 plt.show()
-all_visits.to_pickle(r'D:\\NY_Emission\ODME_NY\OD_File\MDLD\Timeseries.pkl')
+all_visits.to_pickle(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/Timeseries.pkl'))
 
 # Read total devices
 # This is the monthly devices
-devices = pd.read_csv(r'D:\NY_Emission\ODME_NY\OD_File\MDLD\device_count_cbg_ny_datea.csv', index_col=0)
+devices = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/device_count_cbg_ny_datea.csv'), index_col=0)
 ct_rp = {'CT.': '09', 'MA.': '25', 'NJ.': '34', 'NY.': '36', 'PA.': '42', 'US.': '', '\.': ''}
 devices['BGFIPS'] = devices['home_block_group_id'].replace(ct_rp, regex=True)
 # devices = devices.groupby('BGFIPS')['total_devices'].mean().reset_index()
@@ -123,8 +128,8 @@ plt.xlabel('Device count')
 plt.ylabel('Total population')
 plt.legend(loc='upper left')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\NY_Devices.pdf')
-plt.savefig(r'D:\NY_Emission\Figure\NY_Devices.png', dpi=1000)
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/NY_Devices.pdf'))
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/NY_Devices.png'), dpi=1000)
 
 fig, ax = plt.subplots(figsize=(4.5, 4))
 sns.distplot(devices['weights'], ax=ax)
@@ -133,10 +138,10 @@ plt.axvline(x=devices['weights'].median(), color='r', linestyle='--')
 plt.xlabel('Population weight')
 plt.tight_layout()
 plt.legend(['Density', 'Mean', 'Median'])
-plt.savefig(r'D:\NY_Emission\Figure\NY_Devices_dis.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/NY_Devices_dis.pdf'))
 
 # Trip rate
-device_trips = pd.read_csv(r'D:\NY_Emission\ODME_NY\OD_File\MDLD\device_trip_cbg_ny.csv', index_col=0)
+device_trips = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/device_trip_cbg_ny.csv'), index_col=0)
 ct_rp = {'CT.': '09', 'MA.': '25', 'NJ.': '34', 'NY.': '36', 'PA.': '42', 'US.': '', '\.': ''}
 device_trips['BGFIPS'] = device_trips['home_block_group_id'].replace(ct_rp, regex=True)
 CBG_features = pd.read_csv(r'F:\Research_Old\COVID19-Socio\Data\CBG_COVID_19.csv', index_col=0)
@@ -162,5 +167,5 @@ plt.axvline(x=device_trips['trip_rate'].median(), color='r', linestyle='--')
 plt.xlabel('Trip per person')
 plt.tight_layout()
 plt.legend(['density', 'mean', 'median'])
-plt.savefig(r'D:\NY_Emission\Figure\NY_Devices_trips_dis.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/NY_Devices_trips_dis.pdf'))
 

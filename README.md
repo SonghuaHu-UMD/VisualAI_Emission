@@ -120,3 +120,9 @@ The framework supports evaluating several realistic interventions:
    ```
 
 ---
+
+## Result calculation and rerun protocol
+
+Set `NY_EMISSION_ROOT` to one data directory shared by the DTA, MOVES and scenario stages (default `D:\NY_Emission`). Rerun `2-dta/2.2_dtalite_analysis.py` to generate paired `assign_all_*.pkl` (After) and `assign_all_before_*.pkl` (Before) from their actual source columns, plus JSON input/output checksums. Congestion scenarios use the baseline weekday profile. Assignment metrics use all finite positive sensor observations, never residual/plot-limit filtering, and are explicitly calibration-fit diagnostics.
+
+Traffic-volume maps are labelled Traffic Volume Change. A missing/zero baseline has an undefined percentage, not zero change; statuses are exported in `Figure/volume_change_coverage.csv` and missing map values are gray. Optional bridge analysis requires a verified `Shp/bridge_links.csv` with `linkID` and `source`, or `NY_BRIDGE_LINKS`. Missing catalogs are reported in `Figure/bridge_comparison_status.json` and the comparison is skipped. Bridge identities are never guessed. Regenerate downstream MOVES/scenario outputs after replacing the paired assignment files.

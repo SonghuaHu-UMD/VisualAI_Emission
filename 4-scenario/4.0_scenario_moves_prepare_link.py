@@ -1,3 +1,9 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import DATA_ROOT
+from analysis_utils import read_assignment
+
 ## Prepare MOVES at link level for all scenarios
 
 import numpy as np
@@ -73,20 +79,20 @@ P_C = list(CAM_TO_SRC.keys())
 
 # ==================== Load data (once, outside loop) ====================
 # Read signal network (template)
-osm_mt_template = pd.read_pickle(r'D:\NY_Emission\Shp\osmdta_ritis_signal.pkl')
+osm_mt_template = pd.read_pickle(str(Path(DATA_ROOT) / 'Shp/osmdta_ritis_signal.pkl'))
 osm_mt_template['linkID'] = osm_mt_template['from_node_'].astype(str) + '_' + osm_mt_template['to_node_id'].astype(str)
 osm_mt_template = osm_mt_template.drop_duplicates(subset=['linkID']).reset_index(drop=True)
 
 # Read congestion pricing zone
-geo_congest_price = gpd.read_file(r'D:\NY_Emission\Shp\congest_pricing.shp')
+geo_congest_price = gpd.read_file(str(Path(DATA_ROOT) / 'Shp/congest_pricing.shp'))
 
 # Read speed volume change
-mvolume = pd.read_pickle(r'D:\NY_Emission\CongestionPricing\volume_change.pkl')
-mspeed = pd.read_pickle(r'D:\NY_Emission\CongestionPricing\speed_change.pkl')
+mvolume = pd.read_pickle(str(Path(DATA_ROOT) / 'CongestionPricing/volume_change.pkl'))
+mspeed = pd.read_pickle(str(Path(DATA_ROOT) / 'CongestionPricing/speed_change.pkl'))
 mspeed['week'] = mspeed['week'] * 2 + 2
 
 # Read vehicle registration (for age distribution)
-veh_typet_raw = pd.read_csv(r'D:\NY_Emission\Volume_grth\Vehicle__Snowmobile__and_Boat_Registrations.csv')
+veh_typet_raw = pd.read_csv(str(Path(DATA_ROOT) / 'Volume_grth/Vehicle__Snowmobile__and_Boat_Registrations.csv'))
 
 # Read county
 county_us = gpd.read_file(
@@ -98,10 +104,10 @@ cams_gpd_all = gpd.GeoDataFrame(cams, geometry=gpd.points_from_xy(x=cams.longitu
 cams_gpd_all = cams_gpd_all.set_crs('EPSG:4326')
 
 # Camera detection counts
-count_df = pd.read_pickle(r'D:\NY_Emission\Video_Process\count_df_new_final.pkl')
+count_df = pd.read_pickle(str(Path(DATA_ROOT) / 'Video_Process/count_df_new_final.pkl'))
 
 # Weather (same for all scenarios since d_t is fixed)
-weatherr = pd.read_excel(r'D:\NY_Emission\MOVES\Weather.xlsx')
+weatherr = pd.read_excel(str(Path(DATA_ROOT) / 'MOVES/Weather.xlsx'))
 weatherr['Date'] = pd.to_datetime(weatherr['Date'])
 weatherr['Temperature'] = weatherr.Temperature.str.extract(r'(\d+)')
 weatherr['Temperature'] = weatherr['Temperature'].astype(int).apply(lambda x: custom_round(x, base=5))
@@ -167,7 +173,7 @@ for e_ess in tqdm(ess):
     osm_mt.loc[osm_mt['linkID'].isin(sinct['linkID']), 'is_cong'] = 1
 
     # --- Load assignment and compute BPR speed ---
-    assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_.pkl')
+    assign_all = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_.pkl'), 'after')
     assign_all['linkID'] = assign_all['from_node_id'].astype(str) + '_' + assign_all['to_node_id'].astype(str)
     assign_all = assign_all.merge(osm_mt, on=['linkID'])
     assign_all['vcratio'] = assign_all['volume_hourly'] / assign_all['capacity']
@@ -185,7 +191,7 @@ for e_ess in tqdm(ess):
         assign_all = mode_shift(assign_all, ratio)
 
     # --- Generate driving cycle (second-by-second speed) ---
-    checkpoint_dir = Path(r'D:\NY_Emission\MOVES\input_%s' % e_ess)
+    checkpoint_dir = Path(str(Path(DATA_ROOT) / 'MOVES/input_%s') % e_ess)
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
     for kk in tqdm(range(0, 24, 4)):
@@ -246,7 +252,7 @@ for e_ess in tqdm(ess):
 
         print(f'{kk}: Length: {len(speed1)}')
         speed1[['linkID', 'secondID', 'speed', 'grade']].to_csv(
-            r'D:\NY_Emission\MOVES\input_%s\drivingCycle_signal_%s.csv' % (e_ess, kk), index=False)
+            str(Path(DATA_ROOT) / 'MOVES/input_%s/drivingCycle_signal_%s.csv') % (e_ess, kk), index=False)
 
     # --- Generate link file (volume and speed) ---
     for kk in tqdm(range(0, 24, 4)):
@@ -263,7 +269,7 @@ for e_ess in tqdm(ess):
         speed2 = speed2.fillna(0)
         speed2[['linkID', 'countyID', 'zoneID', 'roadTypeID', 'linkLength', 'linkVolume', 'linkAvgSpeed',
                 'linkDescription', 'linkAvgGrade']].to_csv(
-            r'D:\NY_Emission\MOVES\input_%s\link_NYC_36061_%s.csv' % (e_ess, kk), index=False)
+            str(Path(DATA_ROOT) / 'MOVES/input_%s/link_NYC_36061_%s.csv') % (e_ess, kk), index=False)
 
     # --- Source type distribution ---
     ct_weight = count_df.groupby(['file', 'Hour'])['frame'].count() / 3600
@@ -322,17 +328,17 @@ for e_ess in tqdm(ess):
         ct_each1["sourceTypeHourFraction"] = ct_each1.groupby("sourceTypeID")["sourceTypeHourFraction"].transform(
             lambda x: x.fillna(x.mean()))
         print(len(ct_each1) / 13)
-        ct_each1.to_csv(r'D:\NY_Emission\MOVES\input_%s\sourceTypeDistribution_NYC_%s.csv' % (e_ess, kk), index=False)
+        ct_each1.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/sourceTypeDistribution_NYC_%s.csv') % (e_ess, kk), index=False)
 
     # --- Vehicle age distribution (same for all scenarios) ---
-    veh_age_all.to_csv(r'D:\NY_Emission\MOVES\input_%s\ageDistribution_2023.csv' % e_ess, index=False)
+    veh_age_all.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/ageDistribution_2023.csv') % e_ess, index=False)
 
     # --- Meteorology ---
     weather = pd.DataFrame(
         {'monthID': [d_t.month] * 24, 'zoneID': [36061] * 24, "hourID": range(0, 24),
          "temperature": weatherr.loc[weatherr['Date'] == d_t, 'Temperature'].to_list(),
          "realHumidity": weatherr.loc[weatherr['Date'] == d_t, 'Humidity'].to_list()})
-    weather.to_csv(r'D:\NY_Emission\MOVES\input_%s\meteorology_NYC_36061_01.csv' % e_ess, index=False)
+    weather.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/meteorology_NYC_36061_01.csv') % e_ess, index=False)
 
     # --- Generate batchmode ---
     batchmode = pd.DataFrame({
@@ -346,4 +352,4 @@ for e_ess in tqdm(ess):
         'driveSchedule/OpModeDistributionFileName': ['drivingCycle_signal_%s.csv' % ii for ii in range(0, 24, 4)],
         'opmode(o)/cycle(d)/speed(v)': 'd',
     })
-    batchmode.to_csv(r'D:\NY_Emission\MOVES\input_%s\batchmode.csv' % e_ess, index=False)
+    batchmode.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/batchmode.csv') % e_ess, index=False)

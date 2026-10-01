@@ -1,3 +1,9 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import DATA_ROOT
+from analysis_utils import read_assignment
+
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
@@ -31,7 +37,7 @@ def read_emission_csv(pattern, suffix=''):
     frames = []
     for kk in all_files:
         df = pd.read_csv(kk)
-        df['Hour'] = re.findall(r'\d+', kk)[0]
+        df['Hour'] = re.findall(r'\d+', Path(kk).name)[0]
         df['emquant'] = df['emquant'] * METER_TO_MILE
         frames.append(df)
     if not frames:
@@ -45,7 +51,7 @@ def read_emission_csv(pattern, suffix=''):
     return result
 
 
-def load_road_network(pkl_path=r'E:\NY_Emission\Shp\osmdta_ritis_signal.pkl'):
+def load_road_network(pkl_path=str(Path(DATA_ROOT) / 'Shp/osmdta_ritis_signal.pkl')):
     """Load road network, create linkID, deduplicate."""
     osm = pd.read_pickle(pkl_path)
     osm['linkID'] = osm['from_node_'].astype(str) + '_' + osm['to_node_id'].astype(str)
@@ -68,12 +74,12 @@ def split_data_by_type(count_df, y_var='peds', f_name='car_st', v_name='person')
 no_signals = pd.DataFrame()
 with_signals = pd.DataFrame()
 for kk in range(0, 24):
-    no_signal = pd.read_csv(r'E:\NY_Emission\MOVES\input_ns\median_opemode_%s.csv' % kk, index_col=0)
+    no_signal = pd.read_csv(str(Path(DATA_ROOT) / 'MOVES/input_ns/median_opemode_%s.csv') % kk, index_col=0)
     no_signal = no_signal[['sourceTypeID', 'linkID', 'opModeID', 'opmodect']]
     no_signal.columns = ['sourceTypeID', 'linkID', 'opModeID', 'opmodect_no_signal']
     no_signal['hour'] = kk
     no_signals = pd.concat([no_signals, no_signal])
-    with_signal = pd.read_csv(r'E:\NY_Emission\MOVES\input_\median_opemode_%s.csv' % kk, index_col=0)
+    with_signal = pd.read_csv(str(Path(DATA_ROOT) / 'MOVES/input_/median_opemode_%s.csv') % kk, index_col=0)
     with_signal = with_signal[['sourceTypeID', 'linkID', 'opModeID', 'opmodect']]
     with_signal.columns = ['sourceTypeID', 'linkID', 'opModeID', 'opmodect_with_signal']
     with_signal['hour'] = kk
@@ -101,7 +107,7 @@ for kk in range(0, 24):
     plt.ylabel('Operation Mode')
     plt.xlabel('Difference (%)')
     plt.tight_layout()
-    plt.savefig(r'E:\NY_Emission\Figure\Signal_Operation_mode_%s.png' % kk)
+    plt.savefig(str(Path(DATA_ROOT) / 'Figure/Signal_Operation_mode_%s.png') % kk)
     plt.close()
 
 fig, ax = plt.subplots(figsize=(5, 5))
@@ -112,23 +118,23 @@ plt.legend(loc='lower left')
 plt.ylabel('Operation Mode')
 plt.xlabel('Difference (%)')
 plt.tight_layout()
-plt.savefig(r'E:\NY_Emission\Figure\Signal_Operation_mode_8.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/Signal_Operation_mode_8.pdf'))
 plt.close()
 
 #### 2. age distribution ####
 fig, ax = plt.subplots(figsize=(9, 5))
 sns.set_palette('tab20')
-ages = pd.read_csv(r'E:\NY_Emission\MOVES\input_\ageDistribution_2023.csv')
+ages = pd.read_csv(str(Path(DATA_ROOT) / 'MOVES/input_/ageDistribution_2023.csv'))
 ages['sourceTypeID'] = ages['sourceTypeID'].astype(str)
 sns.lineplot(y='ageFraction', x='ageID', hue='sourceTypeID', data=ages, orient='x')
 plt.ylabel('Fraction')
 plt.xlabel('Age (year)')
 plt.legend(title='Source type', ncol=4)
 plt.tight_layout()
-plt.savefig(r'E:\NY_Emission\Figure\Age_distri.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/Age_distri.pdf'))
 
 #### 3. opmode emission ####
-emission_rate = pd.read_csv(r'E:\NY_Emission\MOVES\MatrixData\newyork\f2i33_2023_1_40_55.csv')
+emission_rate = pd.read_csv(str(Path(DATA_ROOT) / 'MOVES/MatrixData/newyork/f2i33_2023_1_40_55.csv'))
 emission_rate.columns = ['opModeID', 'pollutantID', 'sourceTypeID', 'modelYearID', 'em', 'hehe']
 emission_rate = emission_rate.replace({'pollutantID': nmap})
 emission_rate = emission_rate[emission_rate['pollutantID'].isin(['CO', 'NOx', 'CO2', 'PM10', 'PM2.5'])]
@@ -147,14 +153,14 @@ for pid in ['CO', 'NOx', 'CO2', 'PM10', 'PM2.5']:
     plt.ylabel('Operating mode')
     plt.legend(title='Source type')
     plt.tight_layout()
-    plt.savefig(r'E:\NY_Emission\Figure\FEmission_rate_%s.pdf' % (pid))
+    plt.savefig(str(Path(DATA_ROOT) / 'Figure/FEmission_rate_%s.pdf') % (pid))
     plt.close()
 
 #### 4. ablation analysis ####
 # Read emission: base (no signal) and with signal
-emission_inrix = read_emission_csv(r'E:\NY_Emission\MOVES\output_inrix\*_emissionbylink.csv', suffix='inrix')
+emission_inrix = read_emission_csv(str(Path(DATA_ROOT) / 'MOVES/output_inrix/*_emissionbylink.csv'), suffix='inrix')
 emission_inrix.loc[emission_inrix['Hour'] > 23, 'Hour'] -= 24
-emission_signal = read_emission_csv(r'E:\NY_Emission\MOVES\output_signal\*_emissionbylink.csv', suffix='signal')
+emission_signal = read_emission_csv(str(Path(DATA_ROOT) / 'MOVES/output_signal/*_emissionbylink.csv'), suffix='signal')
 
 # Merge
 emi_all = emission_signal.merge(emission_inrix, on=['linkID', 'pollutantID', 'Hour'], how='inner')
@@ -169,7 +175,7 @@ emi_all['emquant_signal_mean'] = emi_all.groupby(['linkID', 'pollutantID'])['emq
 emi_all['emquant_signal_diff'] = 100 * (emi_all['emquant_signal'] - emi_all['emquant_signal_mean']) / \
                                  emi_all['emquant_signal_mean']
 emi_all[['linkID', 'pollutantID', 'emrate_signal', 'emquant_signal', 'Hour',
-         'emrate_inrix', 'emquant_inrix', 'Is_signal']].to_csv(r'E:\NY_Emission\data_plot\Fig3e.csv')
+         'emrate_inrix', 'emquant_inrix', 'Is_signal']].to_csv(str(Path(DATA_ROOT) / 'data_plot/Fig3e.csv'))
 
 # Plot hourly change
 sns.set_palette(sns.color_palette('coolwarm', 4))
@@ -187,7 +193,7 @@ plt.xticks(np.arange(0, 24, 3))
 plt.axhline(y=0, color='r', linestyle='--')
 plt.tight_layout()
 # plt.subplots_adjust(top=0.967, bottom=0.112, left=0.13, right=0.986, hspace=0.2, wspace=0.2)
-plt.savefig(r'E:\NY_Emission\Figure\pollutant_time_diff_s.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/pollutant_time_diff_s.pdf'))
 plt.close()
 
 # Comparison 1: Signal (emquant_) vs no-signal (emquant_ns)
@@ -210,22 +216,22 @@ plt.xlabel('Emission difference (%)')
 plt.ylabel('')
 plt.axvline(x=0, color='r', linestyle='--')
 plt.tight_layout()
-plt.savefig(r'E:\NY_Emission\Figure\pollutant_aba_singal_diff.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/pollutant_aba_singal_diff.pdf'))
 plt.close()
 
 # Comparison 2: Normal (emquant_) vs Abnormal (emquant_ns)
 cct = 0
 # Four events: snow storm (2022/1/29); covid (2020/3/21); Thanksgiving Eve (2021/11/24); Henri flooding (2021/8/22)
 for rr in ['cd', 'te', 'hf', 'ss', 'nv', 'ns', '', 'nsp', 'nvo', 'ncamera']:
-    all_files_inrix = glob.glob(r'E:\NY_Emission\MOVES\input_%s\Output\*_emissionbylink.csv' % rr)
+    all_files_inrix = glob.glob(str(Path(DATA_ROOT) / 'MOVES/input_%s/Output/*_emissionbylink.csv') % rr)
     emission_inrix = pd.DataFrame()
     if len(all_files_inrix) > 0:
         for kk in all_files_inrix:
             df = pd.read_csv(kk)
-            t_hour = re.findall(r'\d+', kk)[0]
+            t_hour = re.findall(r'\d+', Path(kk).name)[0]
             df['Hour'] = t_hour
             df['emquant'] = df['emquant'] * 0.000621371  # meter to miles since emrate is g/mile/hour
-            tvs = pd.read_csv((r'E:\NY_Emission\MOVES\input_%s\link_NYC_36061_%s.csv' % (rr, t_hour)))
+            tvs = pd.read_csv((str(Path(DATA_ROOT) / 'MOVES/input_%s/link_NYC_36061_%s.csv') % (rr, t_hour)))
             df = df.merge(tvs[['linkID', 'linkLength', 'linkVolume', 'linkAvgSpeed']], on='linkID')
             emission_inrix = pd.concat([emission_inrix, df])
         emission_inrix['Hour'] = emission_inrix['Hour'].astype(int)
@@ -249,13 +255,15 @@ emi_dayp = emi_all.groupby(['pollutantID'])[['emquant_', 'emquant_cd', 'emquant_
 osm_mt = load_road_network()
 emi_all = emi_all.merge(osm_mt[['linkID', 'Cross', 'Original', 'Is_signal']], on='linkID')
 
-# Check emission variation near bridge density
-AvgErate = emi_all[~emi_all['linkID'].isin(linkids)].groupby(['pollutantID', 'Hour'])['emrate_'].mean().reset_index()
-BridErate = emi_all[emi_all['linkID'].isin(linkids)].groupby(['pollutantID', 'Hour'])['emrate_'].mean().reset_index()
-AvgErate = AvgErate.merge(BridErate, on=['pollutantID', 'Hour'], how='left')
-AvgErate['diff'] = (AvgErate['emrate__y'] - AvgErate['emrate__x']) / AvgErate['emrate__x']
-AvgErate.groupby('pollutantID')['diff'].mean()
-AvgErate[AvgErate['Hour'] == 17]
+# Bridge comparison requires a sourced catalog; missing input is reported without inventing IDs.
+from analysis_utils import bridge_emission_comparison
+import json
+import os
+AvgErate, bridge_status = bridge_emission_comparison(emi_all, osm_mt,
+    os.environ.get('NY_BRIDGE_LINKS', str(Path(DATA_ROOT) / 'Shp/bridge_links.csv')))
+(Path(DATA_ROOT) / 'Figure/bridge_comparison_status.json').write_text(json.dumps(bridge_status, indent=2), encoding='utf-8')
+if not AvgErate.empty:
+    AvgErate.to_csv(Path(DATA_ROOT) / 'Figure/bridge_emission_comparison.csv', index=False)
 
 # Check total emission variation by road types
 emi_all.groupby('Original')['emquant_'].sum() / emi_all['emquant_'].sum()
@@ -277,7 +285,7 @@ hour_var = (emi_all.groupby(['pollutantID', 'Hour'])['emquant_'].mean() / emi_al
     'emquant_'].mean()).reset_index()
 
 # consider volume before ODME
-assign_all_before = pd.read_pickle(r'E:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_before_.pkl')
+assign_all_before = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_before_.pkl'), 'before')
 assign_all_before['linkID'] = assign_all_before['from_node_id'].astype(str) + '_' + assign_all_before[
     'to_node_id'].astype(str)
 assign_all_before = assign_all_before[['linkID', 'hour', 'volume_hourly']]
@@ -325,7 +333,7 @@ for rr in ['nv', 'nsp', 'ncamera1']:
     plt.ylabel('')
     plt.axvline(x=0, color='r', linestyle='--')
     plt.tight_layout()
-    plt.savefig(r'E:\NY_Emission\Figure\pollutant_aba_%s_diff.pdf' % rr)
+    plt.savefig(str(Path(DATA_ROOT) / 'Figure/pollutant_aba_%s_diff.pdf') % rr)
     plt.close()
 
 # Plot spatial dynamics
@@ -349,17 +357,17 @@ for rr in ['cd', 'te', 'hf', 'ss']:
     ctx.add_basemap(ax, crs=osm_mt_am.crs, source=ctx.providers.CartoDB.DarkMatter, alpha=0.9)
     plt.subplots_adjust(top=0.99, bottom=0.003, left=0.0, right=1.0, hspace=0.0, wspace=0.0)
     plt.axis('off')
-    plt.savefig(r'E:\NY_Emission\Figure\pdiff_VS%s_spatial_change.pdf' % rr)
+    plt.savefig(str(Path(DATA_ROOT) / 'Figure/pdiff_VS%s_spatial_change.pdf') % rr)
     plt.close()
 
 # Get emissions by sourcetype
 nmap = {1: 'TGH', 2: 'CO', 3: 'NOx', 87: 'VOC', 90: 'CO2', 91: 'TEC', 98: 'CO2E', 100: 'PM10', 110: 'PM2.5'}
 # Read emission: base
-all_files_source = glob.glob(r'E:\NY_Emission\MOVES\input_\Output\*_emissionbylinksource.csv')
+all_files_source = glob.glob(str(Path(DATA_ROOT) / 'MOVES/input_/Output/*_emissionbylinksource.csv'))
 emission_source = pd.DataFrame()
 for kk in all_files_source:
     df = pd.read_csv(kk)
-    df['Hour'] = re.findall(r'\d+', kk)[0]
+    df['Hour'] = re.findall(r'\d+', Path(kk).name)[0]
     df['emquant'] = df['emquant'] * 0.000621371  # meter to miles
     emission_source = pd.concat([emission_source, df])
 emission_source['Hour'] = emission_source['Hour'].astype(int)
@@ -388,10 +396,10 @@ plt.ylabel('Percentage(%)')
 plt.xlabel('Emission type')
 plt.tight_layout()
 plt.subplots_adjust(top=0.75, bottom=0.15)
-plt.savefig(r'E:\NY_Emission\Figure\emission_sourcetype.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/emission_sourcetype.pdf'))
 
 # mobility for four events
-sum_day_ny = pd.read_csv(r'E:\\NY_Emission\ODME_NY\OD_File\MDLD\sum_day_ny.csv')
+sum_day_ny = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/sum_day_ny.csv'))
 mean_2021 = sum_day_ny.loc[sum_day_ny['date'].dt.year == 2021, 'emission_f'].mean()
 sum_day_ny['emission_diff'] = (sum_day_ny['emission_f'] - mean_2021) / mean_2021
 sum_day_ny['emission_diff_all'] = (sum_day_ny['emission_f'] - sum_day_ny['emission_f'].mean()) / sum_day_ny[
@@ -429,4 +437,4 @@ plt.xlabel('Date')
 plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
 plt.subplots_adjust(top=0.937, bottom=0.112, left=0.15, right=0.976, hspace=0.2, wspace=0.2)
 # plt.tight_layout()
-plt.savefig(r'E:\NY_Emission\Figure\emission_daily.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/emission_daily.pdf'))

@@ -1,3 +1,9 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import DATA_ROOT
+from analysis_utils import read_assignment
+
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -43,16 +49,16 @@ dts = [datetime.datetime(2020, 3, 21, 0, 0, 0), datetime.datetime(2021, 11, 24, 
 t_t = 'Car'
 
 # Read link
-link = pd.read_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\link.csv')
+link = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/link.csv'))
 mean_link = link.groupby(['link_type_name'])[['capacity', 'lanes', 'free_speed']].mean()
 mean_link['free_speed'] = mean_link['free_speed'] * 0.621371
 sum_link = link.groupby(['link_type_name'])['length'].sum() * 0.000621371  # to mile
 count_link = link.groupby(['link_type_name'])['link_id'].count()
 link_des = mean_link.join(sum_link).join(count_link)
-link_des.to_csv(r'D:\NY_Emission\Figure\link_des.csv')
+link_des.to_csv(str(Path(DATA_ROOT) / 'Figure/link_des.csv'))
 
 # Read ground truth from cameras
-count_df = pd.read_pickle(r'D:\NY_Emission\Video_Process\count_df.pkl')
+count_df = pd.read_pickle(str(Path(DATA_ROOT) / 'Video_Process/count_df.pkl'))
 p_c = ['c1_total_s', 'c2_total_s', 'c3_total_s', 'c4_total_s']
 ct_weight = count_df.groupby(['file', 'Hour'])['frame'].count() / 3600
 ct_sum = count_df.groupby(['file', 'Hour'])[p_c].sum().div(ct_weight, axis=0).reset_index()
@@ -83,11 +89,11 @@ plt.subplots_adjust(top=0.99, bottom=0.003, left=0.0, right=1.0, hspace=0.0, wsp
 # plt.tight_layout()
 plt.axis('off')
 # plt.savefig(r'D:\NY_Emission\Figure\LVolume_camera.pdf')
-plt.savefig(r'D:\NY_Emission\Figure\Camera_dis.png', dpi=1000)
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/Camera_dis.png'), dpi=1000)
 plt.close()
 
 # Get time series ratio: use traffic volume
-traffic_volume_raw = pd.read_csv(r'D:\NY_Emission\Volume_grth\Automated_Traffic_Volume_Counts.csv')
+traffic_volume_raw = pd.read_csv(str(Path(DATA_ROOT) / 'Volume_grth/Automated_Traffic_Volume_Counts.csv'))
 traffic_volume = traffic_volume_raw[(traffic_volume_raw['Yr'] == 2019)].reset_index(drop=True)
 traffic_volume['SegmentID'] = traffic_volume['SegmentID'].astype(int).astype(str).apply(lambda x: x.zfill(7))
 traffic_volume['Yr'] = traffic_volume['Yr'].astype(str)
@@ -106,100 +112,55 @@ traffic_volume_hour['Hour'] = traffic_volume_hour['Datehour'].dt.hour
 # cams_gpd['interact'] = cams_gpd['peds_count'] * (cams_gpd[['c3_car_s', 'c3_truck_s', 'c3_bus_s']].sum(axis=1))
 
 # Create hourly volume file
-avar = 'ODME_volume_after'
-# avar = 'ODME_volume_before'
+# Export paired outputs from their actual source columns; never alias After as Before.
+from analysis_utils import assignment_metrics, hourly_assignment, save_assignment
 PLT_ODME = False
-cct = 0
-# ess = ['cd', 'te', 'hf', 'ss', '']
-ess = ['cg_2', 'cg_4', 'cg_6', 'cg_8']
+ess = ['', 'cg_2', 'cg_4', 'cg_6', 'cg_8']
+event_dates = dict(zip(['cd', 'te', 'hf', 'ss', ''], dts))
 for e_s in ess:
-    assign_all_raw = pd.DataFrame()
-    for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
-        print(t_p)
-        if t_p == 'am':
-            t_l = [6, 7, 8, 9]
-        elif t_p == 'pm':
-            t_l = [15, 16, 17, 18]
-        elif t_p == 'md':
-            t_l = [10, 11, 12, 13, 14]
-        elif t_p == 'nt1':
-            t_l = [19, 20, 21, 22, 23]
-        elif t_p == 'nt2':
-            t_l = [0, 1, 2, 3, 4, 5]
-
-        # Read assignment outcome
-        assign_r = pd.read_csv(
-            r'D:\NY_Emission\ODME_NY\Simulation_outcome\osm_link_performance_%s_%s_%s.csv' % (t_t, t_p, e_s))
-        assign_r['t_p'] = t_p
-        assign_all_raw = pd.concat([assign_all_raw, assign_r[['from_node_id', 'to_node_id', avar, 't_p']]])
+    sources, frames, metrics = [], [], []
+    for t_p, hours in {'am': range(6, 10), 'pm': range(15, 19), 'md': range(10, 15),
+                       'nt1': range(19, 24), 'nt2': range(0, 6)}.items():
+        source = Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome' / f'osm_link_performance_{t_t}_{t_p}_{e_s}.csv'
+        assign_r = pd.read_csv(source)
+        sources.append(source)
+        frames.append(assign_r[['from_node_id', 'to_node_id', 'ODME_volume_before', 'ODME_volume_after']])
+        record = assignment_metrics(assign_r)
+        record.update(scenario=e_s, period=t_p)
+        metrics.append(record)
         if PLT_ODME and e_s == '':
-            # # # Plot ODME scatters
-            assign_r['diff'] = np.abs(assign_r['ODME_volume_after'] - assign_r['ODME_obs_count'])
-            assign_rp = assign_r[assign_r['diff'] < 40000]
-            assign_rp = assign_rp[assign_rp['ODME_volume_after'] > 1]
-            assign_rp['ODME_obs_count'] = assign_rp['ODME_obs_count'] / len(t_l)
-            assign_rp['ODME_volume_after'] = assign_rp['ODME_volume_after'] / len(t_l)
-            assign_rp['ODME_volume_before'] = assign_rp['ODME_volume_before'] / len(t_l)
-
-            assign_rp = assign_rp[assign_rp['ODME_volume_after'] < 7000]
-            assign_rp = assign_rp[assign_rp['ODME_obs_count'] < 7000]
-            assign_rp = assign_rp[assign_rp['ODME_volume_before'] < 7000]
-            assign_rp[['ODME_volume_before', 'ODME_volume_after', 'ODME_obs_count']].corr()
-            mape_b = 100 * np.mean(
-                abs(assign_rp['ODME_volume_before'] - assign_rp['ODME_obs_count']) / assign_rp['ODME_obs_count'])
-            mape_a = 100 * np.mean(
-                abs(assign_rp['ODME_volume_after'] - assign_rp['ODME_obs_count']) / assign_rp['ODME_obs_count'])
+            # Plot all observed sensors; metrics never depend on residuals or plot limits.
+            valid = np.isfinite(assign_r.ODME_obs_count) & (assign_r.ODME_obs_count > 0)
+            plot_data = assign_r.loc[valid].copy()
+            cols = ['ODME_volume_before', 'ODME_volume_after', 'ODME_obs_count']
+            plot_data[cols] = plot_data[cols] / len(hours)
             fig, ax = plt.subplots(figsize=(4.5, 4))
-            sns.regplot(data=assign_rp, x='ODME_obs_count', y='ODME_volume_before', ax=ax,
-                        label='Before: ' + r'$\rho=$' + str(
-                            round(assign_rp[['ODME_volume_before', 'ODME_obs_count']].corr().values[1][0], 2)),
-                        color='#00A08799', scatter_kws={'alpha': 0.5, 's': 5})
-            sns.regplot(data=assign_rp, x='ODME_obs_count', y='ODME_volume_after', ax=ax,
-                        label='After: ' + r'$\rho=$' + str(
-                            round(assign_rp[['ODME_volume_after', 'ODME_obs_count']].corr().values[1][0], 2)),
-                        color='#E64B3599', scatter_kws={'alpha': 0.5, 's': 5})
-            ax.plot([0, max(assign_rp['ODME_volume_after'])], [0, max(assign_rp['ODME_volume_after'])], '--', lw=3,
-                    color='k')
-            plt.xlabel('Ground truth')
-            plt.ylabel('Assignment volume')
-            plt.legend(loc='upper left')
-            plt.tight_layout()
-            # plt.show()
-            plt.savefig(r'D:\NY_Emission\Figure\ODME_Results_osm_%s_%s.pdf' % (t_t, t_p))
-            plt.savefig(r'D:\NY_Emission\Figure\ODME_Results_osm_%s_%s.png' % (t_t, t_p), dpi=1000)
-            plt.close()
-    assign_all_raw = assign_all_raw.groupby(['from_node_id', 'to_node_id']).sum()[avar].reset_index()
-    # assign_all_raw['t_p'].value_counts()
-
-    # Split by hour ratio
-    # Get hour ratio
-    hour_v = traffic_volume_hour.groupby(['dayofweek', 'Hour'])['Vol'].sum().reset_index()
-    hour_v1 = hour_v[(hour_v['dayofweek'].isin([dts[cct].isocalendar()[2] - 1]))]
-    hour_v1 = hour_v1.groupby(['Hour'])['Vol'].sum().reset_index()
-    hour_v1['pct'] = hour_v1['Vol'] / hour_v1['Vol'].sum()
-
-    # assign_r = assign_all_raw[assign_all_raw['t_p'] == t_p].reset_index(drop=True)
-    assign_r = assign_all_raw
-    assign_all = pd.DataFrame()
-    for n_h in range(0, 24):
-        assign_r['volume_hourly'] = assign_r[avar] * hour_v1.loc[hour_v1['Hour'] == n_h, 'pct'].values
-        assign_r['volume_hourly'] = assign_r['volume_hourly'].fillna(0)
-        assign_r['hour'] = n_h
-        assign_all = pd.concat([assign_all, assign_r[['from_node_id', 'to_node_id', 'volume_hourly', 'hour']]])
-    assign_all = assign_all.reset_index(drop=True)
-    # (assign_all.groupby(['hour'])['volume_hourly'].  () / assign_all['volume_hourly'].sum()).plot(marker='o')
-    # (hour_v[(hour_v['dayofweek'].isin([0, 1, 2, 3, 4]))].groupby(['Hour'])['Vol'].sum() /
-    #  hour_v[(hour_v['dayofweek'].isin([0, 1, 2, 3, 4]))]['Vol'].sum()).plot(marker='o')
-    binning = mapclassify.NaturalBreaks(assign_all['volume_hourly'], k=10)  # NaturalBreaks
-    assign_all['cut_jenks'] = (binning.yb + 1) * 0.5
-    # assign_all.to_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_%s.pkl' % e_s)
-    assign_all.to_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_before_%s.pkl' % e_s)
-    cct += 1
+            for stage in ['before', 'after']:
+                sns.regplot(data=plot_data, x='ODME_obs_count', y='ODME_volume_' + stage,
+                            ax=ax, label=stage, scatter_kws={'alpha': .5, 's': 5})
+            ax.set(xlabel='Observed sensor count', ylabel='Assignment volume', title='Calibration fit: all observed sensors')
+            ax.legend()
+            fig.tight_layout()
+            fig.savefig(Path(DATA_ROOT) / 'Figure' / f'ODME_Results_osm_{t_t}_{t_p}.pdf')
+            plt.close(fig)
+    # Congestion scenarios share the baseline weekday profile for comparison.
+    profile_date = dts[-1] if e_s.startswith('cg_') else event_dates[e_s]
+    hour_v = traffic_volume_hour[traffic_volume_hour.dayofweek == profile_date.weekday()].groupby('Hour').Vol.sum()
+    fractions = hour_v / hour_v.sum()
+    raw = pd.concat(frames, ignore_index=True)
+    for stage in ['before', 'after']:
+        assignment = hourly_assignment(raw, fractions, 'ODME_volume_' + stage)
+        binning = mapclassify.NaturalBreaks(assignment.volume_hourly, k=10)
+        assignment['cut_jenks'] = (binning.yb + 1) * .5
+        filename = ('assign_all_before_' if stage == 'before' else 'assign_all_') + e_s + '.pkl'
+        save_assignment(assignment, Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome' / filename,
+                        sources, e_s, profile_date)
+    pd.DataFrame(metrics).to_csv(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome' / f'assignment_metrics_{e_s}.csv', index=False)
 
 # Total volume change
 all_sum = pd.DataFrame()
 for e_s in ess:
-    assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_%s.pkl' % e_s)
+    assign_all = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_%s.pkl') % e_s, 'after')
     temp = assign_all.groupby(['hour'])['volume_hourly'].sum().reset_index()
     temp['event'] = e_s
     all_sum = pd.concat([all_sum, temp])
@@ -208,14 +169,14 @@ all_sum.groupby(['event'])['volume_hourly'].sum()
 
 # Merge road networks
 # 1. Read DTALite network
-link = pd.read_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\link.csv')
+link = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/link.csv'))
 link["geometry"] = gpd.GeoSeries.from_wkt(link["geometry"])
 link = gpd.GeoDataFrame(link, geometry='geometry', crs='EPSG:4326')
 link = link.to_crs('EPSG:32618')
 link['Direction'] = line_dir(link, fromNorth=False)
 
 # 3. Read RITIS network
-l_rts = pd.read_csv(r'D:\NY_Emission\Speed\NY_TT\TMC_Identification.csv')
+l_rts = pd.read_csv(str(Path(DATA_ROOT) / 'Speed/NY_TT/TMC_Identification.csv'))
 l_rts_gpd = pd.DataFrame(np.concatenate((l_rts[['tmc', 'start_longitude', 'start_latitude']].values,
                                          l_rts[['tmc', 'end_longitude', 'end_latitude']].values), axis=0))
 l_rts_gpd.columns = ['link_id', 'Start_Lon', 'Start_Lat']
@@ -245,13 +206,13 @@ link[~link['tmc_code'].isna()].plot(color='g', ax=ax, alpha=0.9, lw=2)
 # link.plot(ax=ax, color='k', alpha=0.6)
 # link.plot(ax=ax, color='blue', alpha=0.15)
 gdf_l_rts.plot(ax=ax, color='orange', alpha=0.15)
-link.to_file(r'D:\NY_Emission\Shp\osmdta_ritis.shp')
+link.to_file(str(Path(DATA_ROOT) / 'Shp/osmdta_ritis.shp'))
 
 # 5. Plot assignment outcome: speed and volume
-link = gpd.read_file(r'D:\NY_Emission\Shp\osmdta_ritis.shp')
+link = gpd.read_file(str(Path(DATA_ROOT) / 'Shp/osmdta_ritis.shp'))
 link = link.rename({'from_node_': 'from_node_id', 'link_type_': 'link_type_name'}, axis=1)
 link = link.to_crs('EPSG:4326')
-speed = pd.read_csv(r'D:\NY_Emission\Speed\NY_TT\NY_TT.csv')
+speed = pd.read_csv(str(Path(DATA_ROOT) / 'Speed/NY_TT/NY_TT.csv'))
 speed['measurement_tstamp'] = pd.to_datetime(speed['measurement_tstamp'])
 # speed.groupby(['measurement_tstamp'])['speed'].mean().plot()
 speed = speed[speed['measurement_tstamp'].dt.date == datetime.date(2023, 12, 5)].reset_index(drop=True)
@@ -261,7 +222,7 @@ binning = mapclassify.NaturalBreaks(speed['speed'], k=10)  # NaturalBreaks
 speed['cut_jenks_speed'] = (binning.yb + 1) * 0.5
 # speed_a = osm.merge(speed[['tmc_code', 'Hour', 'speed']], on=['tmc_code'], how='left')
 # temp = speed_a.groupby(['fclass', 'Hour'])['speed'].mean().reset_index()
-assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_%s.pkl' % '')
+assign_all = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_%s.pkl') % '', 'after')
 
 link['Start_Lon'] = link["geometry"].apply(lambda g: g.coords[0][0])
 link['Start_Lat'] = link["geometry"].apply(lambda g: g.coords[0][1])
@@ -332,19 +293,19 @@ for n_h in np.arange(0, 24):
     # plt.tight_layout()
     plt.axis('off')
     # plt.savefig(r'D:\NY_Emission\Figure\LVolume_camera.pdf')
-    plt.savefig(r'D:\NY_Emission\Figure\LVolume_allnetwork.pdf')
-    plt.savefig(r'D:\NY_Emission\Figure\LPVolume_Plot_OSM_%s_%s.pdf' % (n_h, t_t))
+    plt.savefig(str(Path(DATA_ROOT) / 'Figure/LVolume_allnetwork.pdf'))
+    plt.savefig(str(Path(DATA_ROOT) / 'Figure/LPVolume_Plot_OSM_%s_%s.pdf') % (n_h, t_t))
     plt.close()
 
 # Save as gif
 images = []
 filenames = []
 for n_h in range(0, 24):
-    filenames.extend([r'D:\NY_Emission\Figure\LVolume_Plot_OSM_%s_%s.png' % (n_h, t_t)])
+    filenames.extend([str(Path(DATA_ROOT) / 'Figure/LVolume_Plot_OSM_%s_%s.png') % (n_h, t_t)])
 for filename in filenames:
     images.append(imageio.imread(filename))
 kargs = {'duration': 1000}
-imageio.mimsave(r'D:\NY_Emission\Figure\movie_volume_%s_%s.gif' % (n_h, t_t), images, **kargs)
+imageio.mimsave(str(Path(DATA_ROOT) / 'Figure/movie_volume_%s_%s.gif') % (n_h, t_t), images, **kargs)
 
 # Plot speed and volume
 sns.set_palette("Set2")
@@ -357,16 +318,16 @@ plt.legend(loc='upper left')
 plt.ylabel('Speed(mph)')
 plt.xlabel('Hour')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\speed_hourly.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/speed_hourly.pdf'))
 
 # 6. Plot OD
-NY_Tract = gpd.read_file(r'D:\\NY_Emission\ODME_NY\OD_File\OD_SHP\od_shp_40.shp')
+NY_Tract = gpd.read_file(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/OD_SHP/od_shp_40.shp'))
 NY_Tract = NY_Tract[NY_Tract['CTFIPS'].isin(CT_L)].reset_index(drop=True)
 NY_Tract = NY_Tract.to_crs('EPSG:4326')
 
 # Connect TAZ with Census Tract
 NY_taz = gpd.read_file(
-    r'D:\NY_Emission\ODME_NY\OD_File\2019 & 2045 Trip Tables\TAZ Shapefile\NYBPM2012_TAZ 2023-11-08.shp')
+    str(Path(DATA_ROOT) / 'ODME_NY/OD_File/2019 & 2045 Trip Tables/TAZ Shapefile/NYBPM2012_TAZ 2023-11-08.shp'))
 NY_taz = NY_taz.to_crs("EPSG:4326")
 taz_cen = gpd.GeoDataFrame(NY_taz[['TAZID_2019']], geometry=gpd.points_from_xy(NY_taz.centroid.x, NY_taz.centroid.y))
 taz_cen = taz_cen.set_crs('EPSG:4326')
@@ -374,10 +335,10 @@ TAZ_CTR = gpd.sjoin(NY_Tract, taz_cen)
 
 # Read demand
 demand_raw = pd.read_csv(
-    r'D:\NY_Emission\ODME_NY\OD_File\Trip Tables and Flow Shapefiles\Format_Demand\PCar_2019_pm_Highway_Trip_Table.csv')
+    str(Path(DATA_ROOT) / 'ODME_NY/OD_File/Trip Tables and Flow Shapefiles/Format_Demand/PCar_2019_pm_Highway_Trip_Table.csv'))
 demand_raw['d_zone_id'] = demand_raw['d_zone_id'].astype(float)
 demand_raw['o_zone_id'] = demand_raw['o_zone_id'].astype(float)
-node = pd.read_csv(r'D:\\NY_Emission\ODME_NY\Simulation_osm\node.csv')
+node = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/node.csv'))
 node = node[['zone_id', 'x_coord', 'y_coord']]
 
 # Merge spatial
@@ -451,11 +412,11 @@ def plot_od(demand0, NY_taz, plot_name, o_x, o_y, d_x, d_y):
 
 
 plot_od(demand_n, NY_taz, 'volume', 'origin_lat', 'origin_lng', 'des_lat', 'des_lng')
-plt.savefig(r'D:\NY_Emission\Figure\OD_FLOW_DEMO.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/OD_FLOW_DEMO.pdf'))
 
 # Read and plot iteration
 sns.set_palette('tab20')
-learning_curve = pd.read_excel(r'D:\NY_Emission\ODME_NY\ODME.xlsx')
+learning_curve = pd.read_excel(str(Path(DATA_ROOT) / 'ODME_NY/ODME.xlsx'))
 # Preserve the MAE and MAPE recorded in ODME.xlsx.
 learning_curve['UE_add'] = learning_curve['UE'] + learning_curve['UE_ODME']
 fig, ax = plt.subplots(figsize=(5, 3.5))
@@ -464,7 +425,7 @@ plt.axvline(x=38, ls='--', color='red')
 plt.ylabel('MAE')
 plt.xlabel('Iteration')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\DTA_MAE.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/DTA_MAE.pdf'))
 plt.close()
 
 fig, ax = plt.subplots(figsize=(5, 3.5))
@@ -473,7 +434,7 @@ plt.axvline(x=38, ls='--', color='red')
 plt.ylabel('MAPE(%)')
 plt.xlabel('Iteration')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\DTA_MAPE.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/DTA_MAPE.pdf'))
 plt.close()
 
 fig, ax = plt.subplots(figsize=(5, 3.5))
@@ -482,7 +443,7 @@ plt.axvline(x=38, ls='--', color='red')
 plt.ylabel('UE(%)')
 plt.xlabel('Iteration')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\DTA_UE.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/DTA_UE.pdf'))
 plt.close()
 
 fig, ax = plt.subplots(figsize=(5, 3.5))
@@ -491,7 +452,7 @@ plt.axvline(x=38, ls='--', color='red')
 plt.ylabel('UE during ODME (%)')
 plt.xlabel('Iteration')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\DTA_UE_ODME.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/DTA_UE_ODME.pdf'))
 plt.close()
 
 fig, ax = plt.subplots(figsize=(5, 3.5))
@@ -500,5 +461,5 @@ plt.axvline(x=38, ls='--', color='red')
 plt.ylabel('UE (%)')
 plt.xlabel('Iteration')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\DTA_UE_ODME_Add.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/DTA_UE_ODME_Add.pdf'))
 plt.close()

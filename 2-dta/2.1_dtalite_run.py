@@ -1,3 +1,8 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import DATA_ROOT
+
 # Do the DTA and output the link volume for each period under different scenarios
 import geopandas as gpd
 import numpy as np
@@ -8,7 +13,7 @@ import os
 import osm2gmns as og
 
 pd.options.mode.chained_assignment = None
-os.chdir(r'D:\NY_Emission\ODME_NY\Simulation_osm')
+os.chdir(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm'))
 
 
 # Calculate direction
@@ -33,14 +38,14 @@ CT_L = ['36061', '36005', '34003', '34017', '36081', '35047', '36047', '36119', 
 t_t = 'Car'
 
 ### 1. Get simulation area (Census Tract)
-NY_Tract = gpd.read_file(r'D:\NY_Emission\ODME_NY\OD_File\OD_SHP\od_shp_40.shp')
+NY_Tract = gpd.read_file(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/OD_SHP/od_shp_40.shp'))
 NY_Tract = NY_Tract[NY_Tract['CTFIPS'].isin(CT_L)].reset_index(drop=True)
 NY_Tract = NY_Tract.to_crs('EPSG:4326')
 # NY_Tract.plot()
 
 # Connect TAZ with Census Tract
 NY_taz = gpd.read_file(
-    r'D:\NY_Emission\ODME_NY\OD_File\2019 & 2045 Trip Tables\TAZ Shapefile\NYBPM2012_TAZ 2023-11-08.shp')
+    str(Path(DATA_ROOT) / 'ODME_NY/OD_File/2019 & 2045 Trip Tables/TAZ Shapefile/NYBPM2012_TAZ 2023-11-08.shp'))
 NY_taz = NY_taz.to_crs("EPSG:4326")
 taz_cen = gpd.GeoDataFrame(NY_taz[['TAZID_2019']], geometry=gpd.points_from_xy(NY_taz.centroid.x, NY_taz.centroid.y))
 taz_cen = taz_cen.set_crs('EPSG:4326')
@@ -51,7 +56,7 @@ Need_TAZ = NY_taz[NY_taz['TAZID_2019'].isin(set(TAZ_CTR['TAZID_2019']))].reset_i
 
 ### 3. Prepare for DTALite
 # Read ground truth from DOT
-traffic_volume_raw = pd.read_csv(r'D:\NY_Emission\Volume_grth\Automated_Traffic_Volume_Counts.csv')
+traffic_volume_raw = pd.read_csv(str(Path(DATA_ROOT) / 'Volume_grth/Automated_Traffic_Volume_Counts.csv'))
 traffic_volume = traffic_volume_raw[(traffic_volume_raw['Yr'] == 2019)].reset_index(drop=True)
 traffic_volume['SegmentID'] = traffic_volume['SegmentID'].astype(int).astype(str).apply(lambda x: x.zfill(7))
 traffic_volume['Yr'] = traffic_volume['Yr'].astype(str)
@@ -67,16 +72,16 @@ traffic_v_meana = traffic_v_mean[traffic_v_mean['dayofweek'] == 1]
 # traffic_v_mean.groupby(['Hour'])['Vol'].mean().plot(marker='o')
 
 # Get time series ratio
-all_visits = pd.read_pickle(r'D:\NY_Emission\ODME_NY\OD_File\MDLD\Timeseries.pkl')
+all_visits = pd.read_pickle(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/Timeseries.pkl'))
 all_visits['Timestamp'] = pd.to_datetime(all_visits['Timestamp'])
 all_visits['dayofweek'] = all_visits['Timestamp'].dt.dayofweek
 all_visits['hour'] = all_visits['Timestamp'].dt.hour
 
 # Get demand changes under abnormal period
 ABN_CAL = 'cg'  # 'cg'
-event_ratio = pd.read_pickle(r'D:\\NY_Emission\ODME_NY\OD_File\MDLD\od_event_ratio.pkl')
-cg_ratio = pd.read_pickle(r'D:\\NY_Emission\ODME_NY\OD_File\MDLD\od_cg_ratio.pkl')
-mvolume = pd.read_pickle(r'D:\NY_Emission\CongestionPricing\volume_change.pkl')
+event_ratio = pd.read_pickle(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/od_event_ratio.pkl'))
+cg_ratio = pd.read_pickle(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/MDLD/od_cg_ratio.pkl'))
+mvolume = pd.read_pickle(str(Path(DATA_ROOT) / 'CongestionPricing/volume_change.pkl'))
 
 '''
 # # Build link from osm
@@ -115,7 +120,7 @@ lion.to_file(r'D:\\NY_Emission\ODME_NY\OD_File\OD_SHP\lion_osm.shp')
 '''
 
 # Prepare all files for DTALite and Run the simulation
-lion = gpd.read_file(r'D:\NY_Emission\ODME_NY\OD_File\OD_SHP\lion_osm.shp')
+lion = gpd.read_file(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/OD_SHP/lion_osm.shp'))
 all_demand_Des = []
 for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
     if t_p == 'am':
@@ -140,11 +145,11 @@ for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
         peak_time = '0500'
 
     # Read node
-    node = pd.read_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\network_osm\node.csv')
+    node = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/network_osm/node.csv'))
     node = gpd.GeoDataFrame(node, geometry=gpd.points_from_xy(node.x_coord, node.y_coord), crs="EPSG:4326")
 
     # Read link
-    link = pd.read_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\network_osm\link.csv')
+    link = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/network_osm/link.csv'))
     link["geometry"] = gpd.GeoSeries.from_wkt(link["geometry"])
     # link['capacity'] = link['capacity'] * len(t_l)
     link = gpd.GeoDataFrame(link, geometry='geometry', crs='EPSG:4326')
@@ -184,11 +189,11 @@ for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
     link_type = link.groupby(['link_type', 'link_type_name'])[['free_speed', 'capacity']].mean().reset_index()
 
     # Output
-    node.to_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\node.csv', index=0)
-    link.to_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\link.csv', index=0)
+    node.to_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/node.csv'), index=0)
+    link.to_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/link.csv'), index=0)
 
     # Select demand we need
-    demand = pd.read_csv(r'D:\NY_Emission\ODME_NY\OD_File\Format_Demand\P%s_%s_Trip_Table.csv' % (t_t, t_p))
+    demand = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/OD_File/Format_Demand/P%s_%s_Trip_Table.csv') % (t_t, t_p))
     demand['d_zone_id'] = demand['d_zone_id'].astype(float)
     demand['o_zone_id'] = demand['o_zone_id'].astype(float)
     demand_need = demand[(demand['d_zone_id'].isin(node['zone_id'])) &
@@ -229,7 +234,7 @@ for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
             demand_need_abn['volume'] = demand_need_abn['volume'] * demand_need_abn['changes']
             demand_need_abn = demand_need_abn[demand_need_abn['volume'] > 0.1].reset_index(drop=True)
             demand_need_abn[['d_zone_id', 'o_zone_id', 'volume']].to_csv(
-                r'D:\NY_Emission\ODME_NY\Simulation_osm\demand.csv', index=0)
+                str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/demand.csv'), index=0)
         elif ABN_CAL == 'cg':
             TAZ_CTR_ID = TAZ_CTR[['TAZID_2019', 'GEOID']]
             TAZ_CTR_ID['CTFIPS'] = TAZ_CTR_ID['GEOID'].str[0:5]
@@ -251,11 +256,11 @@ for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
             demand_need_abn['volume'] = demand_need_abn['volume'] * demand_need_abn['changes']
             demand_need_abn = demand_need_abn[demand_need_abn['volume'] > 0.1].reset_index(drop=True)
             demand_need_abn[['d_zone_id', 'o_zone_id', 'volume']].to_csv(
-                r'D:\NY_Emission\ODME_NY\Simulation_osm\demand.csv', index=0)
+                str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/demand.csv'), index=0)
         else:
             demand_need = demand_need[demand_need['volume'] > 0.1].reset_index(drop=True)
             demand_need[['d_zone_id', 'o_zone_id', 'volume']].to_csv(
-                r'D:\NY_Emission\ODME_NY\Simulation_osm\demand.csv', index=0)
+                str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/demand.csv'), index=0)
 
         # Generate sensor data for ODME
         t_mean = traffic_v_meana[traffic_v_meana['Hour'].isin(t_l)].groupby(['SegmentID'])['Vol'].sum().reset_index()
@@ -276,18 +281,18 @@ for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
             lion_label['count'] = lion_label['count'] * (
                     sum(cg_ratio_need['total_trips_%s' % d_d]) / sum(cg_ratio_need['total_trips_avg']))
             print(sum(cg_ratio_need['total_trips_%s' % d_d]) / sum(cg_ratio_need['total_trips_avg']))
-        lion_label.to_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\sensor_data.csv', index=False)
+        lion_label.to_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/sensor_data.csv'), index=False)
 
         # Generate demand period
         demand_period = pd.DataFrame(
             {'first_column': [0], "demand_period_id": 1, "demand_period": t_p, "notes": 'weekday',
              "time_period": time_period, "peak_time": peak_time})
-        demand_period.to_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\demand_period.csv', index=False)
+        demand_period.to_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/demand_period.csv'), index=False)
         demand_file_list = pd.DataFrame(
             {'first_column': [0], "file_sequence_no": 1, "scenario_index_vector": 0, "file_name": "demand.csv",
              "demand_period": t_p, "mode_type": 'auto', "format_type": "column", "scale_factor": 1,
              "departure_time_profile_no": 1})
-        demand_file_list.to_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\demand_file_list.csv', index=False)
+        demand_file_list.to_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/demand_file_list.csv'), index=False)
 
         # Generate period ratio
         hour_v = all_visits.groupby(['dayofweek', 'hour'])['Visits'].sum().reset_index()
@@ -303,13 +308,13 @@ for t_p in ['am', 'pm', 'md', 'nt1', 'nt2']:  #
         hour_v2['departure_time_profile_no'] = 1
         hour_v2['time_period'] = time_period
         hour_v2[['first_column', 'departure_time_profile_no', 'time_period'] + hour_v1['second'].tolist()].to_csv(
-            r'D:\NY_Emission\ODME_NY\Simulation_osm\departure_time_profile.csv', index=False)
+            str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/departure_time_profile.csv'), index=False)
 
         # Run assignment
-        subprocess.call([r"D:\NY_Emission\ODME_NY\Simulation_osm\DTALite_230915.exe"])
+        subprocess.call([str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/DTALite_230915.exe')])
 
         # Read and save results
-        assign_r = pd.read_csv(r'D:\NY_Emission\ODME_NY\Simulation_osm\link_performance_s0_25nb.csv')
+        assign_r = pd.read_csv(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_osm/link_performance_s0_25nb.csv'))
         assign_r.to_csv(
-            r'D:\NY_Emission\ODME_NY\Simulation_outcome\osm_link_performance_%s_%s_%s.csv' % (t_t, t_p, d_d))
+            str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/osm_link_performance_%s_%s_%s.csv') % (t_t, t_p, d_d))
 

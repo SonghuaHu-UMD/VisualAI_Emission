@@ -5,8 +5,10 @@ Contains shared paths, constants, mappings, and plot styles.
 
 # ==================== Data Paths ====================
 # Adjust these paths based on your environment (D: or E: drive)
-DATA_ROOT = r'D:\NY_Emission'
-DATA_ROOT_E = r'E:\NY_Emission'
+import os
+
+DATA_ROOT = os.environ.get('NY_EMISSION_ROOT', r'D:\NY_Emission')
+DATA_ROOT_E = DATA_ROOT
 
 # Sub-paths
 SHP_DIR = rf'{DATA_ROOT}\Shp'

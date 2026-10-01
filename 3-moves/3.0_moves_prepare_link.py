@@ -1,3 +1,9 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import DATA_ROOT
+from analysis_utils import read_assignment
+
 ## Prepare MOVES at link level for all scenarios
 
 import numpy as np
@@ -16,17 +22,17 @@ def custom_round(x, base=5):
 
 
 # Read signal network
-osm_mt = pd.read_pickle(r'D:\NY_Emission\Shp\osmdta_ritis_signal.pkl')
+osm_mt = pd.read_pickle(str(Path(DATA_ROOT) / 'Shp/osmdta_ritis_signal.pkl'))
 osm_mt['linkID'] = osm_mt['from_node_'].astype(str) + '_' + osm_mt['to_node_id'].astype(str)
 osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
 
 # Read vehicle reg
-veh_typet = pd.read_csv(r'D:\NY_Emission\Volume_grth\Vehicle__Snowmobile__and_Boat_Registrations.csv')
+veh_typet = pd.read_csv(str(Path(DATA_ROOT) / 'Volume_grth/Vehicle__Snowmobile__and_Boat_Registrations.csv'))
 # Read county
 county_us = gpd.read_file(
     r'G:\Data\Dewey\SAFEGRAPH\Open Census Data\Census Website\2019\nhgis0011_shape\\US_county_2019.shp')
 # Read speed
-speeda = pd.read_csv(r'D:\NY_Emission\Speed\NY_TT\NY_TT.csv')
+speeda = pd.read_csv(str(Path(DATA_ROOT) / 'Speed/NY_TT/NY_TT.csv'))
 speeda = speeda[speeda['tmc_code'].isin(osm_mt['tmc_code'])].reset_index(drop=True)
 speeda = speeda[['tmc_code', 'measurement_tstamp', 'speed']]
 speeda['measurement_tstamp'] = pd.to_datetime(speeda['measurement_tstamp'])
@@ -52,7 +58,7 @@ for e_ess in ess:
              drop('tmc_code', axis=1).reset_index())
 
     # Read signal network
-    osm_mt = pd.read_pickle(r'D:\NY_Emission\Shp\osmdta_ritis_signal.pkl')
+    osm_mt = pd.read_pickle(str(Path(DATA_ROOT) / 'Shp/osmdta_ritis_signal.pkl'))
     osm_mt['linkID'] = osm_mt['from_node_'].astype(str) + '_' + osm_mt['to_node_id'].astype(str)
     osm_mt = osm_mt.drop_duplicates(subset=['linkID']).reset_index(drop=True)
     osm_mt = osm_mt[['link_type_', 'linkID', 'tmc_code', 'Is_signal', 'geometry', 'Original', 'Cross']]
@@ -78,7 +84,7 @@ for e_ess in ess:
     # gpd.GeoSeries(ops.linemerge(osm_mt_link.dissolve().geometry[0])).explode().to_file(r'D:\NY_Emission\Shp\temp1.shp')
 
     # Reset road type based on volume
-    assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_.pkl')
+    assign_all = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_.pkl'), 'after')
     assign_all['linkID'] = assign_all['from_node_id'].astype(str) + '_' + assign_all['to_node_id'].astype(str)
     assign_all['volume_hourly'].describe()
     assign_all_lk = assign_all.groupby('linkID')['volume_hourly'].mean().reset_index()
@@ -101,12 +107,12 @@ for e_ess in ess:
         print(str(kk) + ': Length: ' + str(len(speed1)))
 
         # Generate path for the input path
-        checkpoint_dir = Path(r'D:\NY_Emission\MOVES\input_%s' % e_ess)
+        checkpoint_dir = Path(str(Path(DATA_ROOT) / 'MOVES/input_%s') % e_ess)
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
         if e_ess in ['ns', 'ncamera']:  # Output drivingCycle: no signal
             speed1[['linkID', 'secondID', 'speed', 'grade']].to_csv(
-                r'D:\NY_Emission\MOVES\input_%s\drivingCycle_signal_%s.csv' % (e_ess, kk), index=False)
+                str(Path(DATA_ROOT) / 'MOVES/input_%s/drivingCycle_signal_%s.csv') % (e_ess, kk), index=False)
         else:  # Output drivingCycle: with signal:
             # Generate signal phase (Is_1): 1=green/moving, 0=red/stopped
             from utils import generate_signal_phase
@@ -157,14 +163,14 @@ for e_ess in ess:
 
             print(str(kk) + ': Length: ' + str(len(speed1)))
             speed1[['linkID', 'secondID', 'speed', 'grade']].to_csv(
-                r'D:\NY_Emission\MOVES\input_%s\drivingCycle_signal_%s.csv' % (e_ess, kk), index=False)
+                str(Path(DATA_ROOT) / 'MOVES/input_%s/drivingCycle_signal_%s.csv') % (e_ess, kk), index=False)
 
 
     # Generate link file (volume and speed)
     if e_ess in ['', 'ns', 'nsp', 'nvo', 'ncamera']:
-        assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_.pkl')
+        assign_all = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_.pkl'), 'after')
     else:
-        assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_%s.pkl' % e_ess)
+        assign_all = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_%s.pkl') % e_ess, 'after')
     assign_all['linkID'] = assign_all['from_node_id'].astype(str) + '_' + assign_all['to_node_id'].astype(str)
     if e_ess in ['nvo']:  # avg volume for each link type
         assign_all = assign_all.merge(osm_mt_link[['linkID', 'link_type_']], on=['linkID'], how='left')
@@ -187,7 +193,7 @@ for e_ess in ess:
         speed2 = speed2.fillna(0)
         speed2[['linkID', 'countyID', 'zoneID', 'roadTypeID', 'linkLength', 'linkVolume', 'linkAvgSpeed',
                 'linkDescription', 'linkAvgGrade']].to_csv(
-            r'D:\NY_Emission\MOVES\input_%s\link_NYC_36061_%s.csv' % (e_ess, kk), index=False)
+            str(Path(DATA_ROOT) / 'MOVES/input_%s/link_NYC_36061_%s.csv') % (e_ess, kk), index=False)
 
     # Generate source type
     '''
@@ -196,7 +202,7 @@ for e_ess in ess:
     Long-Haul Single Unit Trucks: 53; Motor Homes: 54; Short-Haul Combination Trucks: 61; Long-Haul Combination Trucks: 62
     '''
     # Get car type distribution from camera
-    count_df = pd.read_pickle(r'D:\NY_Emission\Video_Process\count_df_new_final.pkl')
+    count_df = pd.read_pickle(str(Path(DATA_ROOT) / 'Video_Process/count_df_new_final.pkl'))
     p_c = ['c3_car_s', 'c3_ptruck_s', 'c3_htruck_s', 'c3_ltruck_s', 'c3_sbus_s', 'c3_bus_s', 'c3_mcycle_s']
     ct_weight = count_df.groupby(['file', 'Hour'])['frame'].count() / 3600
     ct_each = count_df.groupby(['file', 'Hour'])[p_c].sum().div(ct_weight, axis=0).reset_index()
@@ -269,7 +275,7 @@ for e_ess in ess:
             lambda x: x.fillna(x.mean()))
         print(len(ct_each1) / 13)
         # ct_each1['sourceTypeHourFraction'].isnull().sum()
-        ct_each1.to_csv(r'D:\NY_Emission\MOVES\input_%s\sourceTypeDistribution_NYC_%s.csv' % (e_ess, kk), index=False)
+        ct_each1.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/sourceTypeDistribution_NYC_%s.csv') % (e_ess, kk), index=False)
 
         # Avg output: for non-vehicle case
         if e_ess in ['nv', 'ncamera']:
@@ -278,7 +284,7 @@ for e_ess in ess:
             ct_each2 = ct_each2.sort_values(by=['linkID', 'sourceTypeID']).reset_index(drop=True)
             ct_each2['sourceTypeHourFraction'] = ct_each2['ratio']
             ct_each2.drop('ratio', axis=1, inplace=True)
-            ct_each2.to_csv(r'D:\NY_Emission\MOVES\input_nv\sourceTypeDistribution_NYC_%s.csv' % kk, index=False)
+            ct_each2.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_nv/sourceTypeDistribution_NYC_%s.csv') % kk, index=False)
 
     # Vehicle age distribution
     veh_typet = veh_typet[veh_typet['Record Type'].isin(['VEH', 'TRL'])].reset_index(drop=True)
@@ -304,10 +310,10 @@ for e_ess in ess:
     veh_age_all["ageFraction"] = veh_age_all.groupby(["ageID"])['ageFraction'].transform(
         lambda x: x.fillna(x.mean()))
     veh_age_all['yearID'] = 2023
-    veh_age_all.to_csv(r'D:\NY_Emission\MOVES\input_%s\ageDistribution_2023.csv' % e_ess, index=False)
+    veh_age_all.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/ageDistribution_2023.csv') % e_ess, index=False)
 
     # Meteorology for new york
-    weatherr = pd.read_excel(r'D:\NY_Emission\MOVES\Weather.xlsx')
+    weatherr = pd.read_excel(str(Path(DATA_ROOT) / 'MOVES/Weather.xlsx'))
     weatherr['Date'] = pd.to_datetime(weatherr['Date'])
     weatherr['Temperature'] = weatherr.Temperature.str.extract('(\d+)')
     weatherr['Temperature'] = weatherr['Temperature'].astype(int).apply(lambda x: custom_round(x, base=5))
@@ -319,7 +325,7 @@ for e_ess in ess:
          "temperature": weatherr.loc[weatherr['Date'] == d_t, 'Temperature'].to_list(),
          "realHumidity": weatherr.loc[weatherr['Date'] == d_t, 'Humidity'].to_list()})
 
-    weather.to_csv(r'D:\NY_Emission\MOVES\input_%s\meteorology_NYC_36061_01.csv' % e_ess, index=False)
+    weather.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/meteorology_NYC_36061_01.csv') % e_ess, index=False)
 
     # Generate batchmode
     batchmode = pd.DataFrame()
@@ -332,6 +338,6 @@ for e_ess in ess:
     batchmode['linkFileName'] = ['link_NYC_36061_%s.csv' % ii for ii in range(0, 24)]
     batchmode['driveSchedule/OpModeDistributionFileName'] = ['drivingCycle_signal_%s.csv' % ii for ii in range(0, 24)]
     batchmode['opmode(o)/cycle(d)/speed(v)'] = 'd'
-    batchmode.to_csv(r'D:\NY_Emission\MOVES\input_%s\batchmode.csv' % e_ess, index=False)
+    batchmode.to_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/batchmode.csv') % e_ess, index=False)
 
     cct += 1

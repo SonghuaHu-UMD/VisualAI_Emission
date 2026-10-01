@@ -1,3 +1,10 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import DATA_ROOT
+from analysis_utils import read_assignment
+
+from analysis_utils import percent_change
 import pandas as pd
 import matplotlib.pyplot as plt
 import glob
@@ -23,7 +30,7 @@ nmap = {1: 'TGH', 2: 'CO', 3: 'NOx', 87: 'VOC', 90: 'CO2', 91: 'TEC', 98: 'CO2E'
 METER_TO_MILE = 0.000621371
 
 
-def load_road_network(pkl_path=r'D:\NY_Emission\Shp\osmdta_ritis_signal.pkl'):
+def load_road_network(pkl_path=str(Path(DATA_ROOT) / 'Shp/osmdta_ritis_signal.pkl')):
     """Load road network, create linkID, deduplicate."""
     osm = pd.read_pickle(pkl_path)
     osm['linkID'] = osm['from_node_'].astype(str) + '_' + osm['to_node_id'].astype(str)
@@ -35,7 +42,7 @@ def read_scenario_emission(scenario_list):
     cct = 0
     emi_merged = None
     for rr in scenario_list:
-        all_files = glob.glob(r'D:\NY_Emission\MOVES\input_%s\Output\*_emissionbylink.csv' % rr)
+        all_files = glob.glob(str(Path(DATA_ROOT) / 'MOVES/input_%s/Output/*_emissionbylink.csv') % rr)
         if not all_files:
             continue
         frames = []
@@ -45,7 +52,7 @@ def read_scenario_emission(scenario_list):
             t_hour = t_hour[1] if len(t_hour) > 1 else t_hour[0]
             df['Hour'] = t_hour
             df['emquant'] = df['emquant'] * METER_TO_MILE
-            tvs = pd.read_csv(r'D:\NY_Emission\MOVES\input_%s\link_NYC_36061_%s.csv' % (rr, t_hour))
+            tvs = pd.read_csv(str(Path(DATA_ROOT) / 'MOVES/input_%s/link_NYC_36061_%s.csv') % (rr, t_hour))
             df = df.merge(tvs[['linkID', 'linkLength', 'linkVolume', 'linkAvgSpeed']], on='linkID')
             frames.append(df)
         emission = pd.concat(frames)
@@ -65,7 +72,7 @@ def read_scenario_emission(scenario_list):
 cct = 0
 for rr in ['s_mode10', 's_mode20', 's_mode30', 's_peak10', 's_peak20', 's_peak30', 's_remote10', 's_remote20',
            's_remote30', 's_raw']:
-    all_files_inrix = glob.glob(r'D:\NY_Emission\MOVES\input_%s\Output\*_emissionbylink.csv' % rr)
+    all_files_inrix = glob.glob(str(Path(DATA_ROOT) / 'MOVES/input_%s/Output/*_emissionbylink.csv') % rr)
     emission_inrix = pd.DataFrame()
     if len(all_files_inrix) > 0:
         for kk in all_files_inrix:
@@ -77,7 +84,7 @@ for rr in ['s_mode10', 's_mode20', 's_mode30', 's_peak10', 's_peak20', 's_peak30
                 t_hour = t_hour[0]
             df['Hour'] = t_hour
             df['emquant'] = df['emquant'] * 0.000621371  # meter to miles since emrate is g/mile/hour
-            tvs = pd.read_csv((r'D:\NY_Emission\MOVES\input_%s\link_NYC_36061_%s.csv' % (rr, t_hour)))
+            tvs = pd.read_csv((str(Path(DATA_ROOT) / 'MOVES/input_%s/link_NYC_36061_%s.csv') % (rr, t_hour)))
             df = df.merge(tvs[['linkID', 'linkLength', 'linkVolume', 'linkAvgSpeed']], on='linkID')
             emission_inrix = pd.concat([emission_inrix, df])
         emission_inrix['Hour'] = emission_inrix['Hour'].astype(int)
@@ -92,7 +99,7 @@ for rr in ['s_mode10', 's_mode20', 's_mode30', 's_peak10', 's_peak20', 's_peak30
         cct += 1
 
 # build electric
-all_files_inrix = glob.glob(r'D:\NY_Emission\MOVES\input_s_raw\Output\*_emissionbylinksource.csv')
+all_files_inrix = glob.glob(str(Path(DATA_ROOT) / 'MOVES/input_s_raw/Output/*_emissionbylinksource.csv'))
 emission_source = pd.DataFrame()
 if len(all_files_inrix) > 0:
     for kk in all_files_inrix:
@@ -154,7 +161,7 @@ plt.xlabel('Mode shift (%)')
 plt.ylabel('Emission change (%)')
 plt.legend(title='')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\E_by_mode_shift.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/E_by_mode_shift.pdf'))
 
 
 # peak
@@ -174,7 +181,7 @@ plt.xlabel('Departure time shift (%)')
 plt.ylabel('Emission change (%)')
 plt.legend(title='')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\E_peak_shift.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/E_peak_shift.pdf'))
 
 # ev
 df_ev = pd.melt(
@@ -197,7 +204,7 @@ plt.ylabel('Emission change (%)')
 plt.xticks(rotation=15)
 plt.legend(title='', loc='lower right')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\E_ev_shift.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/E_ev_shift.pdf'))
 
 # congestion pricing
 emi_all = read_scenario_emission(['s_cong_2', 's_cong_4', 's_cong_6', 's_cong_8', 's_raw'])
@@ -235,40 +242,40 @@ plt.xlabel('Weeks after announcement')
 plt.ylabel('Emission change (%)')
 plt.legend(title='')
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\E_congestionprice.pdf')
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/E_congestionprice.pdf'))
 
 # link-level change
 # Total volume change
 osm_mt = load_road_network()
 
-assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_.pkl')
+assign_all = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_.pkl'), 'after')
 assign_all = assign_all[assign_all['hour'] == 8]
 assign_all = assign_all[['from_node_id', 'to_node_id', 'volume_hourly']]
 assign_all.columns = ['from_node_', 'to_node_id', 'volume_hourly']
 for e_s in ['cg_2', 'cg_4', 'cg_6', 'cg_8']:
-    assign_each = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_%s.pkl' % e_s)
+    assign_each = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_%s.pkl') % e_s, 'after')
     assign_each = assign_each[assign_each['hour'] == 8]
     assign_each = assign_each[['from_node_id', 'to_node_id', 'volume_hourly']]
     assign_each.columns = ['from_node_', 'to_node_id', 'volume_hourly_%s' % e_s]
     assign_all = assign_all.merge(assign_each, on=['from_node_', 'to_node_id'], how='outer')
-    assign_all['volume_pct_%s' % e_s] = 100 * (assign_all['volume_hourly_%s' % e_s] - assign_all['volume_hourly']) / \
-                                        assign_all['volume_hourly']
+    assign_all['volume_pct_%s' % e_s], assign_all['volume_status_%s' % e_s] = percent_change(
+        assign_all['volume_hourly'], assign_all['volume_hourly_%s' % e_s])
+assign_all.to_csv(Path(DATA_ROOT) / 'Figure/volume_change_coverage.csv', index=False)
 
 osm_mt = osm_mt.merge(assign_all, on=['from_node_', 'to_node_id'])
 osm_mt[['volume_hourly', 'volume_hourly_cg_2', 'volume_hourly_cg_4', 'volume_hourly_cg_6', 'volume_hourly_cg_8']].corr()
 
-geo_congest_price = gpd.read_file(r'D:\NY_Emission\Shp\congest_pricing.shp')
+geo_congest_price = gpd.read_file(str(Path(DATA_ROOT) / 'Shp/congest_pricing.shp'))
 geo_congest_price = geo_congest_price.to_crs(osm_mt.crs)
 osm_mt.drop(['index_right'], axis=1, inplace=True)
 sinct = gpd.sjoin(osm_mt, geo_congest_price, how="inner", predicate="intersects")
 osm_mt['is_cong'] = 0
 osm_mt.loc[osm_mt['linkID'].isin(sinct['linkID']), 'is_cong'] = 1
 
-congest_price = gpd.read_file(r'D:\NY_Emission\Shp\congest_pricing.shp')
+congest_price = gpd.read_file(str(Path(DATA_ROOT) / 'Shp/congest_pricing.shp'))
 congest_price = congest_price.to_crs(osm_mt.crs)
 
 osm_mt = osm_mt.replace([np.inf, -np.inf], np.nan)
-osm_mt = osm_mt.fillna(0)
 osm_mt_amm = osm_mt.copy()
 linkids = ['205394_212547', '139_199908', '36991_70', '37461_37462', '36987_37451', '127952_205838', '127909_83',
            '8253_5756', '239542_242107', '204866_204867', '250349_250350', '201655_253985', '201652_201653',
@@ -278,15 +285,14 @@ osm_mt_amm['linkids'] = osm_mt_amm['from_node_'].astype(str) + '_' + osm_mt_amm[
 ct_max = [35, 43, 56, 63]
 cct = 0
 for rr in ['cg_2', 'cg_4', 'cg_6', 'cg_8']:
-    binning = mapclassify.NaturalBreaks(-osm_mt_amm['volume_pct_%s' % rr], k=4)  # NaturalBreaks
-    osm_mt_amm['cut_jenks'] = (binning.yb + 1) * 0.5
     osm_mt_amm = osm_mt_amm.to_crs('EPSG:32618')
     fig, ax = plt.subplots(figsize=(3.5, 7))
     mpl.rcParams['text.color'] = 'w'  # osm_mt_am['cut_jenks']
     osm_mt_amm.plot(column='volume_pct_%s' % rr, cmap='RdYlGn_r', scheme="user_defined",
                     classification_kwds={'bins': [-15, 0, 15]},
                     lw=1.1, ax=ax, alpha=0.6, legend=True,
-                    legend_kwds={'labelcolor': 'white', "fmt": "{:.0f}", 'ncol': 1, 'title': 'CO2 Change (%)',
+                    missing_kwds={'color': 'gray', 'label': 'Missing or zero baseline'},
+                    legend_kwds={'labelcolor': 'white', "fmt": "{:.0f}", 'ncol': 1, 'title': 'Traffic Volume Change (%)',
                                  'loc': 'upper left', 'frameon': True, 'facecolor': 'k', 'edgecolor': 'k',
                                  'framealpha': 0.5})
     mpl.rcParams['text.color'] = 'k'
@@ -295,5 +301,5 @@ for rr in ['cg_2', 'cg_4', 'cg_6', 'cg_8']:
     plt.subplots_adjust(top=0.99, bottom=0.003, left=0.0, right=1.0, hspace=0.0, wspace=0.0)
     plt.axis('off')
     cct += 1
-    plt.savefig(r'D:\NY_Emission\Figure\pdiff_VS%s_spatial_change.pdf' % rr)
+    plt.savefig(str(Path(DATA_ROOT) / 'Figure/pdiff_VS%s_spatial_change.pdf') % rr)
     plt.close()

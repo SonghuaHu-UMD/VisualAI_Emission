@@ -1,3 +1,9 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import DATA_ROOT
+from analysis_utils import read_assignment
+
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -22,13 +28,13 @@ def bpr_function(x, ffs, alpha, beta):
 
 
 # Read link
-link = gpd.read_file(r'D:\NY_Emission\Shp\osmdta_ritis.shp')
+link = gpd.read_file(str(Path(DATA_ROOT) / 'Shp/osmdta_ritis.shp'))
 link = link.rename({'from_node_': 'from_node_id', 'link_type_': 'link_type_name'}, axis=1)
 link = link.to_crs(epsg=3857)
 link['linkLength'] = link.geometry.length  # meter
 
 # Read speed
-speed = pd.read_csv(r'D:\NY_Emission\Speed\NY_TT\NY_TT.csv')
+speed = pd.read_csv(str(Path(DATA_ROOT) / 'Speed/NY_TT/NY_TT.csv'))
 speed['measurement_tstamp'] = pd.to_datetime(speed['measurement_tstamp'])
 speed = speed[speed['measurement_tstamp'].dt.date == datetime.date(2023, 12, 5)].reset_index(drop=True)
 # speed.groupby(['measurement_tstamp'])['speed'].mean().plot()
@@ -36,7 +42,7 @@ speed['Hour'] = speed['measurement_tstamp'].dt.hour
 speed = speed.groupby(['tmc_code', 'Hour'])['speed'].mean().reset_index()
 
 # Read volume
-assign_all = pd.read_pickle(r'D:\NY_Emission\ODME_NY\Simulation_outcome\assign_all_%s.pkl' % '')
+assign_all = read_assignment(str(Path(DATA_ROOT) / 'ODME_NY/Simulation_outcome/assign_all_%s.pkl') % '', 'after')
 
 # Match speed-density relationships
 aadt = link.merge(speed[['tmc_code', 'speed', 'Hour']], on=['tmc_code'], how='left')
@@ -103,9 +109,9 @@ plt.xlabel('Density' + r'$(veh*mile^{-1}*lane^{-1})$')
 plt.ylabel('Speed(mph)')
 plt.xlim([0, 150])
 plt.tight_layout()
-plt.savefig(r'D:\NY_Emission\Figure\Speed_density.pdf')
-plt.savefig(r'D:\NY_Emission\Figure\Speed_density.png', dpi=600)
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/Speed_density.pdf'))
+plt.savefig(str(Path(DATA_ROOT) / 'Figure/Speed_density.png'), dpi=600)
 
 # Output parameters for later use
-paras.to_csv(r'D:\NY_Emission\Figure\VSD_Parameter.csv', index=False)
+paras.to_csv(str(Path(DATA_ROOT) / 'Figure/VSD_Parameter.csv'), index=False)
 paras.groupby('rtype')[['ffs', 'k_critical', 'mm']].mean()
